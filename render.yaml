@@ -9,7 +9,8 @@ services:
     region: virginia
     branch: main
     buildCommand: pnpm install --frozen-lockfile && pnpm build
-    startCommand: pnpm start
+    # ensure-media seeds the persistent disk with image files on first boot (idempotent)
+    startCommand: node scripts/ensure-media.mjs && pnpm start
     healthCheckPath: /
     autoDeployTrigger: commit
     disk:
