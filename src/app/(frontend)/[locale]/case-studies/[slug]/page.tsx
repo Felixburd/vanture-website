@@ -12,7 +12,7 @@ import { Badge } from '@/components/ui/badge'
 import { CMSLink } from '@/components/CMSLink'
 import { docMetadata } from '@/lib/seo'
 
-type Props = { params: Promise<{ locale: Locale; slug: string }> }
+type Props = { params: Promise<{ locale: string; slug: string }> }
 
 const signalVariant = {
   GO: 'green',
@@ -27,7 +27,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params
-  const cs = await getCaseStudy(slug, locale)
+  const cs = await getCaseStudy(slug, locale as Locale)
   return docMetadata(cs?.seo, cs?.title)
 }
 

@@ -7,11 +7,11 @@ import { getPage } from '@/lib/payload'
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 import { docMetadata } from '@/lib/seo'
 
-type Props = { params: Promise<{ locale: Locale }> }
+type Props = { params: Promise<{ locale: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
-  const page = await getPage('home', locale)
+  const page = await getPage('home', locale as Locale)
   // Home uses the site-default title from the layout; only override if SEO is set.
   return docMetadata(page?.seo)
 }

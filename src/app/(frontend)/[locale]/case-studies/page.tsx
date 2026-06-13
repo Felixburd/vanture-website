@@ -9,7 +9,7 @@ import { routing, type Locale } from '@/i18n/routing'
 import { getCaseStudies } from '@/lib/payload'
 import { Container } from '@/components/blocks/shared'
 
-type Props = { params: Promise<{ locale: Locale }> }
+type Props = { params: Promise<{ locale: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params

@@ -478,8 +478,10 @@ async function seed() {
   // ── Case studies ──────────────────────────────────────────────────────
   const caseStudies = buildCaseStudies({ agency, saas, ecom, msp })
   for (const cs of caseStudies) {
-    const created = await payload.create({ collection: 'caseStudies', locale: 'en', data: cs.en })
-    await payload.update({ collection: 'caseStudies', id: created.id, locale: 'fr-ca', data: cs.fr })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const created = await payload.create({ collection: 'caseStudies', locale: 'en', data: cs.en as any })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await payload.update({ collection: 'caseStudies', id: created.id, locale: 'fr-ca', data: cs.fr as any })
   }
 
   payload.logger.info('— Seed complete —')

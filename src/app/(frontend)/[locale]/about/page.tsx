@@ -7,11 +7,11 @@ import { getPage } from '@/lib/payload'
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
 import { docMetadata } from '@/lib/seo'
 
-type Props = { params: Promise<{ locale: Locale }> }
+type Props = { params: Promise<{ locale: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
-  const page = await getPage('about', locale)
+  const page = await getPage('about', locale as Locale)
   return docMetadata(page?.seo, page?.title)
 }
 

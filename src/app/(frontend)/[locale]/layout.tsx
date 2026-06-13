@@ -18,10 +18,10 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: Locale }>
+  params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   const { locale } = await params
-  const settings = await getSiteSettings(locale)
+  const settings = await getSiteSettings(locale as Locale)
   const ogImage =
     typeof settings.defaultSeo?.image === 'object' ? settings.defaultSeo?.image?.url : undefined
 
@@ -46,7 +46,7 @@ export default async function LocaleLayout({
   params,
 }: {
   children: React.ReactNode
-  params: Promise<{ locale: Locale }>
+  params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
   if (!hasLocale(routing.locales, locale)) notFound()
