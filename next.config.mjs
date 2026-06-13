@@ -10,6 +10,9 @@ const nextConfig = {
   // Payload + sharp run on the server only.
   serverExternalPackages: ['sharp'],
   images: {
+    // Serve media directly (no runtime sharp optimization) — keeps the 512MB
+    // Starter instance stable; files are already reasonably sized on the disk.
+    unoptimized: true,
     remotePatterns: [
       { protocol: 'https', hostname: 'cdn.prod.website-files.com' },
       { protocol: 'https', hostname: '*.onrender.com' },
