@@ -22,7 +22,7 @@ export async function DvtaPanel({
   const tabs = (block.tabs ?? []).map((tab) => tab.label)
 
   return (
-    <section id="dvta" className="scroll-mt-24 border-b border-border/60 py-20 md:py-28">
+    <section id="dvta" className="scroll-mt-24 py-20 md:py-28">
       <Container>
         <div className="grid items-start gap-12 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
           {/* The sample assessment panel */}

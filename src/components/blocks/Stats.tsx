@@ -3,7 +3,7 @@ import { Container, Eyebrow } from './shared'
 
 export function Stats({ block }: { block: StatsBlock }) {
   return (
-    <section className="border-b border-border/60 py-20 md:py-28">
+    <section className="py-20 md:py-28">
       <Container>
         <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
           <div>

@@ -76,6 +76,13 @@ const IMG = {
   logo: 'https://cdn.prod.website-files.com/694f82d3ab726ade91d3acc4/694f8420fd4e67d5bc2c4e94_Fichier%201.png',
 }
 
+// Section tone rhythm mirroring the brand site (light → dark → light → graydark …).
+const HOME_TONES = ['light', 'dark', 'light', 'graydark', 'light', 'white', 'dark', 'white']
+const ABOUT_TONES = ['light', 'white', 'dark']
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const withTones = (layout: any[], tones: string[]) =>
+  layout.map((b, i) => ({ ...b, tone: tones[i] ?? 'light' }))
+
 async function seed() {
   const payload = await getPayload({ config })
   payload.logger.info('— Seeding Vanture content —')
@@ -384,10 +391,15 @@ async function seed() {
     collection: 'pages',
     locale: 'en',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    data: { title: 'Home', slug: 'home', layout: homeEN as any },
+    data: { title: 'Home', slug: 'home', layout: withTones(homeEN, HOME_TONES) as any },
   })
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  await payload.update({ collection: 'pages', id: home.id, locale: 'fr-ca', data: { title: 'Accueil', layout: homeFR as any } })
+  await payload.update({
+    collection: 'pages',
+    id: home.id,
+    locale: 'fr-ca',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data: { title: 'Accueil', layout: withTones(homeFR, HOME_TONES) as any },
+  })
 
   // ── About page ─────────────────────────────────────────────────────────
   const aboutEN = [
@@ -470,10 +482,15 @@ async function seed() {
     collection: 'pages',
     locale: 'en',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    data: { title: 'About', slug: 'about', layout: aboutEN as any },
+    data: { title: 'About', slug: 'about', layout: withTones(aboutEN, ABOUT_TONES) as any },
   })
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  await payload.update({ collection: 'pages', id: about.id, locale: 'fr-ca', data: { title: 'À propos', layout: aboutFR as any } })
+  await payload.update({
+    collection: 'pages',
+    id: about.id,
+    locale: 'fr-ca',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data: { title: 'À propos', layout: withTones(aboutFR, ABOUT_TONES) as any },
+  })
 
   // ── Case studies ──────────────────────────────────────────────────────
   const caseStudies = buildCaseStudies({ agency, saas, ecom, msp })

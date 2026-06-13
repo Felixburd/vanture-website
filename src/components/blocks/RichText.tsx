@@ -4,7 +4,7 @@ import { Container, Eyebrow } from './shared'
 
 export function RichTextView({ block }: { block: RichTextBlock }) {
   return (
-    <section className="border-b border-border/60 py-20 md:py-28">
+    <section className="py-20 md:py-28">
       <Container className="max-w-3xl">
         {block.eyebrow ? <Eyebrow>{block.eyebrow}</Eyebrow> : null}
         {block.heading ? (

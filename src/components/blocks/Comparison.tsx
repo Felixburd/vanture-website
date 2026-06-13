@@ -3,7 +3,7 @@ import { Container, Eyebrow } from './shared'
 
 export function Comparison({ block }: { block: ComparisonBlock }) {
   return (
-    <section className="border-b border-border/60 py-20 md:py-28">
+    <section className="py-20 md:py-28">
       <Container>
         <div className="max-w-2xl">
           {block.eyebrow ? <Eyebrow>{block.eyebrow}</Eyebrow> : null}

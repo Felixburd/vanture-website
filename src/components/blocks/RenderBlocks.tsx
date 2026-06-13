@@ -11,6 +11,36 @@ import { RichTextView } from './RichText'
 
 type Block = NonNullable<Page['layout']>[number]
 
+const toneClass: Record<string, string> = {
+  light: 'tone-light',
+  white: 'tone-white',
+  dark: 'tone-dark',
+  graydark: 'tone-graydark',
+}
+
+function renderBlock(block: Block, locale: Locale) {
+  switch (block.blockType) {
+    case 'hero':
+      return <Hero block={block} locale={locale} />
+    case 'stats':
+      return <Stats block={block} />
+    case 'dvtaPanel':
+      return <DvtaPanel block={block} locale={locale} />
+    case 'lenses':
+      return <Lenses block={block} />
+    case 'audience':
+      return <Audience block={block} locale={locale} />
+    case 'comparison':
+      return <Comparison block={block} />
+    case 'cta':
+      return <Cta block={block} locale={locale} />
+    case 'richText':
+      return <RichTextView block={block} />
+    default:
+      return null
+  }
+}
+
 export async function RenderBlocks({
   blocks,
   locale,
@@ -23,26 +53,12 @@ export async function RenderBlocks({
     <>
       {await Promise.all(
         blocks.map(async (block: Block) => {
-          switch (block.blockType) {
-            case 'hero':
-              return <Hero key={block.id} block={block} locale={locale} />
-            case 'stats':
-              return <Stats key={block.id} block={block} />
-            case 'dvtaPanel':
-              return <DvtaPanel key={block.id} block={block} locale={locale} />
-            case 'lenses':
-              return <Lenses key={block.id} block={block} />
-            case 'audience':
-              return <Audience key={block.id} block={block} locale={locale} />
-            case 'comparison':
-              return <Comparison key={block.id} block={block} />
-            case 'cta':
-              return <Cta key={block.id} block={block} locale={locale} />
-            case 'richText':
-              return <RichTextView key={block.id} block={block} />
-            default:
-              return null
-          }
+          const tone = toneClass[block.tone ?? 'light'] ?? 'tone-light'
+          return (
+            <div key={block.id} className={`${tone} bg-background text-foreground`}>
+              {renderBlock(block, locale)}
+            </div>
+          )
         }),
       )}
     </>

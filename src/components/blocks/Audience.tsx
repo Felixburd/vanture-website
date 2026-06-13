@@ -10,7 +10,7 @@ export async function Audience({
   locale: Locale
 }) {
   return (
-    <section className="border-b border-border/60 py-20 md:py-28">
+    <section className="py-20 md:py-28">
       <Container>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {await Promise.all(

@@ -10,7 +10,7 @@ export async function Header({ locale }: { locale: Locale }) {
   const logo = typeof header.logo === 'object' ? header.logo : null
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="tone-light sticky top-0 z-50 border-b bg-background/90 backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
         <Link
           href="/"

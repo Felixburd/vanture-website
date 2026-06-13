@@ -2,14 +2,19 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { setRequestLocale, getMessages } from 'next-intl/server'
-import { Inter } from 'next/font/google'
+import { Inter, Roboto_Flex } from 'next/font/google'
 import { routing, type Locale } from '@/i18n/routing'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { getSiteSettings } from '@/lib/payload'
 import '../globals.css'
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
+const robotoFlex = Roboto_Flex({
+  subsets: ['latin'],
+  variable: '--font-roboto-flex',
+  display: 'swap',
+})
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -54,7 +59,11 @@ export default async function LocaleLayout({
   const messages = await getMessages()
 
   return (
-    <html lang={locale} className={`dark ${inter.variable}`} suppressHydrationWarning>
+    <html
+      lang={locale}
+      className={`${inter.variable} ${robotoFlex.variable}`}
+      suppressHydrationWarning
+    >
       <body className="min-h-screen font-sans antialiased">
         <NextIntlClientProvider messages={messages}>
           <Header locale={locale} />

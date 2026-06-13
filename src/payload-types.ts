@@ -170,6 +170,10 @@ export interface Page {
  * via the `definition` "HeroBlock".
  */
 export interface HeroBlock {
+  /**
+   * Background tone for this section.
+   */
+  tone?: ('light' | 'white' | 'dark' | 'graydark') | null;
   eyebrow?: string | null;
   headline: string;
   subhead?: string | null;
@@ -194,6 +198,10 @@ export interface HeroBlock {
  * via the `definition` "StatsBlock".
  */
 export interface StatsBlock {
+  /**
+   * Background tone for this section.
+   */
+  tone?: ('light' | 'white' | 'dark' | 'graydark') | null;
   eyebrow?: string | null;
   heading?: string | null;
   body?: string | null;
@@ -214,6 +222,10 @@ export interface StatsBlock {
  * via the `definition` "DvtaPanelBlock".
  */
 export interface DvtaPanelBlock {
+  /**
+   * Background tone for this section.
+   */
+  tone?: ('light' | 'white' | 'dark' | 'graydark') | null;
   panelLabel?: string | null;
   tabs?:
     | {
@@ -264,6 +276,10 @@ export interface DvtaPanelBlock {
  * via the `definition` "LensesBlock".
  */
 export interface LensesBlock {
+  /**
+   * Background tone for this section.
+   */
+  tone?: ('light' | 'white' | 'dark' | 'graydark') | null;
   eyebrow?: string | null;
   heading?: string | null;
   body?: string | null;
@@ -286,6 +302,10 @@ export interface LensesBlock {
  * via the `definition` "AudienceBlock".
  */
 export interface AudienceBlock {
+  /**
+   * Background tone for this section.
+   */
+  tone?: ('light' | 'white' | 'dark' | 'graydark') | null;
   cards?:
     | {
         eyebrow?: string | null;
@@ -315,6 +335,10 @@ export interface AudienceBlock {
  * via the `definition` "ComparisonBlock".
  */
 export interface ComparisonBlock {
+  /**
+   * Background tone for this section.
+   */
+  tone?: ('light' | 'white' | 'dark' | 'graydark') | null;
   eyebrow?: string | null;
   heading?: string | null;
   colTraditional?: string | null;
@@ -336,6 +360,10 @@ export interface ComparisonBlock {
  * via the `definition` "CtaBlock".
  */
 export interface CtaBlock {
+  /**
+   * Background tone for this section.
+   */
+  tone?: ('light' | 'white' | 'dark' | 'graydark') | null;
   eyebrow?: string | null;
   heading?: string | null;
   body?: string | null;
@@ -360,6 +388,10 @@ export interface CtaBlock {
  * via the `definition` "RichTextBlock".
  */
 export interface RichTextBlock {
+  /**
+   * Background tone for this section.
+   */
+  tone?: ('light' | 'white' | 'dark' | 'graydark') | null;
   eyebrow?: string | null;
   heading?: string | null;
   content?: {
@@ -655,6 +687,7 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "HeroBlock_select".
  */
 export interface HeroBlockSelect<T extends boolean = true> {
+  tone?: T;
   eyebrow?: T;
   headline?: T;
   subhead?: T;
@@ -680,6 +713,7 @@ export interface HeroBlockSelect<T extends boolean = true> {
  * via the `definition` "StatsBlock_select".
  */
 export interface StatsBlockSelect<T extends boolean = true> {
+  tone?: T;
   eyebrow?: T;
   heading?: T;
   body?: T;
@@ -699,6 +733,7 @@ export interface StatsBlockSelect<T extends boolean = true> {
  * via the `definition` "DvtaPanelBlock_select".
  */
 export interface DvtaPanelBlockSelect<T extends boolean = true> {
+  tone?: T;
   panelLabel?: T;
   tabs?:
     | T
@@ -752,6 +787,7 @@ export interface DvtaPanelBlockSelect<T extends boolean = true> {
  * via the `definition` "LensesBlock_select".
  */
 export interface LensesBlockSelect<T extends boolean = true> {
+  tone?: T;
   eyebrow?: T;
   heading?: T;
   body?: T;
@@ -773,6 +809,7 @@ export interface LensesBlockSelect<T extends boolean = true> {
  * via the `definition` "AudienceBlock_select".
  */
 export interface AudienceBlockSelect<T extends boolean = true> {
+  tone?: T;
   cards?:
     | T
     | {
@@ -803,6 +840,7 @@ export interface AudienceBlockSelect<T extends boolean = true> {
  * via the `definition` "ComparisonBlock_select".
  */
 export interface ComparisonBlockSelect<T extends boolean = true> {
+  tone?: T;
   eyebrow?: T;
   heading?: T;
   colTraditional?: T;
@@ -823,6 +861,7 @@ export interface ComparisonBlockSelect<T extends boolean = true> {
  * via the `definition` "CtaBlock_select".
  */
 export interface CtaBlockSelect<T extends boolean = true> {
+  tone?: T;
   eyebrow?: T;
   heading?: T;
   body?: T;
@@ -848,6 +887,7 @@ export interface CtaBlockSelect<T extends boolean = true> {
  * via the `definition` "RichTextBlock_select".
  */
 export interface RichTextBlockSelect<T extends boolean = true> {
+  tone?: T;
   eyebrow?: T;
   heading?: T;
   content?: T;

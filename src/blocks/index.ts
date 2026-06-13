@@ -1,4 +1,4 @@
-import type { Block } from 'payload'
+import type { Block, Field } from 'payload'
 import { linksField } from '../fields/link'
 
 /** Hero — headline, subhead, CTA buttons. */
@@ -179,7 +179,21 @@ export const RichTextBlock: Block = {
   ],
 }
 
-export const layoutBlocks = [
+/** Section background tone, shared by every block. */
+const toneField: Field = {
+  name: 'tone',
+  type: 'select',
+  defaultValue: 'light',
+  options: [
+    { label: 'Light (#f2f2f2)', value: 'light' },
+    { label: 'White', value: 'white' },
+    { label: 'Dark (#010202)', value: 'dark' },
+    { label: 'Gray dark (#4d4d4d)', value: 'graydark' },
+  ],
+  admin: { description: 'Background tone for this section.' },
+}
+
+export const layoutBlocks: Block[] = [
   HeroBlock,
   StatsBlock,
   DvtaPanelBlock,
@@ -188,4 +202,4 @@ export const layoutBlocks = [
   ComparisonBlock,
   CtaBlock,
   RichTextBlock,
-]
+].map((b) => ({ ...b, fields: [toneField, ...b.fields] }))

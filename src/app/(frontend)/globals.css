@@ -1,61 +1,101 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
-@custom-variant dark (&:is(.dark *));
+/*
+  Vanture brand tokens. The site alternates section "tones" (light / white /
+  dark / graydark). Each tone sets the surface variables for its subtree, so the
+  shared utility classes (bg-background, text-foreground, bg-card, border-border,
+  text-muted-foreground) recolor automatically per section.
 
+  Accent (--primary) is the brand gold (#D97706). CTA buttons use a separate
+  dark-teal (--btn) that inverts to light on dark tones for contrast.
+*/
 :root {
-  --radius: 0.625rem;
+  --radius: 0.5rem;
 
-  /* Light theme (kept for completeness; the site renders dark by default) */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.18 0.02 250);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.02 250);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.02 250);
-  --primary: oklch(0.72 0.15 75);
-  --primary-foreground: oklch(0.18 0.02 250);
-  --secondary: oklch(0.96 0.005 250);
-  --secondary-foreground: oklch(0.2 0.02 250);
-  --muted: oklch(0.96 0.005 250);
-  --muted-foreground: oklch(0.5 0.02 250);
-  --accent: oklch(0.96 0.005 250);
-  --accent-foreground: oklch(0.2 0.02 250);
-  --destructive: oklch(0.58 0.22 27);
-  --border: oklch(0.9 0.01 250);
-  --input: oklch(0.9 0.01 250);
-  --ring: oklch(0.72 0.15 75);
+  --background: #f2f2f2;
+  --foreground: #010202;
+  --card: #ffffff;
+  --card-foreground: #010202;
+  --popover: #ffffff;
+  --popover-foreground: #010202;
+  --muted: #e8e8e8;
+  --muted-foreground: #525252;
+  --accent: #e8e8e8;
+  --accent-foreground: #010202;
+  --secondary: #e8e8e8;
+  --secondary-foreground: #010202;
+  --border: rgba(1, 2, 2, 0.12);
+  --input: rgba(1, 2, 2, 0.16);
+  --destructive: #b91c1c;
 
-  /* DVTA status colours */
-  --status-green: oklch(0.72 0.16 155);
-  --status-amber: oklch(0.78 0.15 75);
-  --status-critical: oklch(0.62 0.22 27);
+  /* Brand gold accent */
+  --primary: #d97706;
+  --primary-foreground: #1a1206;
+  --ring: #d97706;
+
+  /* Dark-teal CTA button */
+  --btn: #0d1f22;
+  --btn-foreground: #fafafa;
+
+  --status-green: #15803d;
+  --status-amber: #b45309;
+  --status-critical: #b91c1c;
 }
 
-.dark {
-  /* Vanture brand: near-black canvas, off-white type, warm gold accent */
-  --background: oklch(0.16 0.012 255);
-  --foreground: oklch(0.96 0.005 250);
-  --card: oklch(0.2 0.013 255);
-  --card-foreground: oklch(0.96 0.005 250);
-  --popover: oklch(0.2 0.013 255);
-  --popover-foreground: oklch(0.96 0.005 250);
-  --primary: oklch(0.8 0.13 78);
-  --primary-foreground: oklch(0.17 0.02 255);
-  --secondary: oklch(0.26 0.014 255);
-  --secondary-foreground: oklch(0.96 0.005 250);
-  --muted: oklch(0.24 0.013 255);
-  --muted-foreground: oklch(0.68 0.012 255);
-  --accent: oklch(0.28 0.015 255);
-  --accent-foreground: oklch(0.96 0.005 250);
-  --destructive: oklch(0.62 0.22 27);
-  --border: oklch(0.3 0.014 255 / 60%);
-  --input: oklch(0.3 0.014 255);
-  --ring: oklch(0.8 0.13 78);
+.tone-light {
+  --background: #f2f2f2;
+  --card: #ffffff;
+  --muted: #e8e8e8;
+  --accent: #e4e4e4;
+}
 
-  --status-green: oklch(0.78 0.16 155);
-  --status-amber: oklch(0.82 0.15 80);
-  --status-critical: oklch(0.68 0.2 25);
+.tone-white {
+  --background: #ffffff;
+  --card: #f7f7f7;
+  --muted: #f0f0f0;
+  --accent: #f0f0f0;
+  --border: rgba(1, 2, 2, 0.1);
+}
+
+.tone-dark {
+  --background: #010202;
+  --foreground: #ffffff;
+  --card: #121313;
+  --card-foreground: #ffffff;
+  --popover: #121313;
+  --popover-foreground: #ffffff;
+  --muted: #1a1b1b;
+  --muted-foreground: #9a9a9a;
+  --accent: #1f2020;
+  --accent-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.14);
+  --input: rgba(255, 255, 255, 0.2);
+  --btn: #f2f2f2;
+  --btn-foreground: #010202;
+  --status-green: #4ade80;
+  --status-amber: #fbbf24;
+  --status-critical: #f87171;
+}
+
+.tone-graydark {
+  --background: #4d4d4d;
+  --foreground: #ffffff;
+  --card: #3d3d3d;
+  --card-foreground: #ffffff;
+  --popover: #3d3d3d;
+  --popover-foreground: #ffffff;
+  --muted: #5a5a5a;
+  --muted-foreground: #dcdcdc;
+  --accent: #5a5a5a;
+  --accent-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.18);
+  --input: rgba(255, 255, 255, 0.24);
+  --btn: #f2f2f2;
+  --btn-foreground: #010202;
+  --status-green: #4ade80;
+  --status-amber: #fbbf24;
+  --status-critical: #f87171;
 }
 
 @theme inline {
@@ -82,20 +122,30 @@
   --color-status-amber: var(--status-amber);
   --color-status-critical: var(--status-critical);
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 6px);
 
-  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-roboto-flex), var(--font-inter), sans-serif;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: var(--border);
   }
   body {
-    @apply bg-background text-foreground;
+    background: var(--background);
+    color: var(--foreground);
     font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-roboto-flex), var(--font-inter), sans-serif;
+    letter-spacing: -0.018em;
+    font-weight: 500;
   }
 }
