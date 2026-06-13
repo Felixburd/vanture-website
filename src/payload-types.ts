@@ -177,6 +177,7 @@ export interface HeroBlock {
   eyebrow?: string | null;
   headline: string;
   subhead?: string | null;
+  image?: (number | null) | Media;
   buttons?:
     | {
         link?: {
@@ -192,6 +193,52 @@ export interface HeroBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'hero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt?: string | null;
+  caption?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    hero?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -226,6 +273,10 @@ export interface DvtaPanelBlock {
    * Background tone for this section.
    */
   tone?: ('light' | 'white' | 'dark' | 'graydark') | null;
+  /**
+   * Brand mark shown beside the heading.
+   */
+  icon?: (number | null) | Media;
   panelLabel?: string | null;
   tabs?:
     | {
@@ -308,6 +359,7 @@ export interface AudienceBlock {
   tone?: ('light' | 'white' | 'dark' | 'graydark') | null;
   cards?:
     | {
+        image?: (number | null) | Media;
         eyebrow?: string | null;
         title: string;
         body?: string | null;
@@ -364,6 +416,10 @@ export interface CtaBlock {
    * Background tone for this section.
    */
   tone?: ('light' | 'white' | 'dark' | 'graydark') | null;
+  /**
+   * Optional side image (renders two-column when set).
+   */
+  image?: (number | null) | Media;
   eyebrow?: string | null;
   heading?: string | null;
   body?: string | null;
@@ -412,52 +468,6 @@ export interface RichTextBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'richText';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt?: string | null;
-  caption?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-  sizes?: {
-    thumbnail?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    card?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    hero?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -691,6 +701,7 @@ export interface HeroBlockSelect<T extends boolean = true> {
   eyebrow?: T;
   headline?: T;
   subhead?: T;
+  image?: T;
   buttons?:
     | T
     | {
@@ -734,6 +745,7 @@ export interface StatsBlockSelect<T extends boolean = true> {
  */
 export interface DvtaPanelBlockSelect<T extends boolean = true> {
   tone?: T;
+  icon?: T;
   panelLabel?: T;
   tabs?:
     | T
@@ -813,6 +825,7 @@ export interface AudienceBlockSelect<T extends boolean = true> {
   cards?:
     | T
     | {
+        image?: T;
         eyebrow?: T;
         title?: T;
         body?: T;
@@ -862,6 +875,7 @@ export interface ComparisonBlockSelect<T extends boolean = true> {
  */
 export interface CtaBlockSelect<T extends boolean = true> {
   tone?: T;
+  image?: T;
   eyebrow?: T;
   heading?: T;
   body?: T;

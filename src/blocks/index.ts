@@ -10,6 +10,7 @@ export const HeroBlock: Block = {
     { name: 'eyebrow', type: 'text', localized: true },
     { name: 'headline', type: 'textarea', localized: true, required: true },
     { name: 'subhead', type: 'textarea', localized: true },
+    { name: 'image', type: 'upload', relationTo: 'media' },
     linksField('buttons'),
   ],
 }
@@ -41,6 +42,7 @@ export const DvtaPanelBlock: Block = {
   interfaceName: 'DvtaPanelBlock',
   labels: { singular: 'DVTA Demo Panel', plural: 'DVTA Demo Panels' },
   fields: [
+    { name: 'icon', type: 'upload', relationTo: 'media', admin: { description: 'Brand mark shown beside the heading.' } },
     { name: 'panelLabel', type: 'text', localized: true },
     {
       name: 'tabs',
@@ -123,6 +125,7 @@ export const AudienceBlock: Block = {
       name: 'cards',
       type: 'array',
       fields: [
+        { name: 'image', type: 'upload', relationTo: 'media' },
         { name: 'eyebrow', type: 'text', localized: true },
         { name: 'title', type: 'text', localized: true, required: true },
         { name: 'body', type: 'textarea', localized: true },
@@ -160,6 +163,7 @@ export const CtaBlock: Block = {
   interfaceName: 'CtaBlock',
   labels: { singular: 'CTA Band', plural: 'CTA Bands' },
   fields: [
+    { name: 'image', type: 'upload', relationTo: 'media', admin: { description: 'Optional side image (renders two-column when set).' } },
     { name: 'eyebrow', type: 'text', localized: true },
     { name: 'heading', type: 'textarea', localized: true },
     { name: 'body', type: 'textarea', localized: true },

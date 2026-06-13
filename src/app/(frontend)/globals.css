@@ -29,10 +29,10 @@
   --input: rgba(1, 2, 2, 0.16);
   --destructive: #b91c1c;
 
-  /* Brand gold accent */
-  --primary: #d97706;
-  --primary-foreground: #1a1206;
-  --ring: #d97706;
+  /* Monochrome brand accent (black on light surfaces) */
+  --primary: #010202;
+  --primary-foreground: #ffffff;
+  --ring: #010202;
 
   /* Dark-teal CTA button */
   --btn: #0d1f22;
@@ -71,31 +71,37 @@
   --accent-foreground: #ffffff;
   --border: rgba(255, 255, 255, 0.14);
   --input: rgba(255, 255, 255, 0.2);
+  --primary: #ffffff;
+  --primary-foreground: #010202;
+  --ring: #ffffff;
   --btn: #f2f2f2;
   --btn-foreground: #010202;
-  --status-green: #4ade80;
-  --status-amber: #fbbf24;
-  --status-critical: #f87171;
+  --status-green: #e5e5e5;
+  --status-amber: #a3a3a3;
+  --status-critical: #ffffff;
 }
 
 .tone-graydark {
-  --background: #4d4d4d;
+  --background: #171717;
   --foreground: #ffffff;
-  --card: #3d3d3d;
+  --card: #242424;
   --card-foreground: #ffffff;
-  --popover: #3d3d3d;
+  --popover: #242424;
   --popover-foreground: #ffffff;
-  --muted: #5a5a5a;
-  --muted-foreground: #dcdcdc;
-  --accent: #5a5a5a;
+  --muted: #2a2a2a;
+  --muted-foreground: #a8a8a8;
+  --accent: #2a2a2a;
   --accent-foreground: #ffffff;
-  --border: rgba(255, 255, 255, 0.18);
-  --input: rgba(255, 255, 255, 0.24);
+  --border: rgba(255, 255, 255, 0.12);
+  --input: rgba(255, 255, 255, 0.2);
+  --primary: #ffffff;
+  --primary-foreground: #010202;
+  --ring: #ffffff;
   --btn: #f2f2f2;
   --btn-foreground: #010202;
-  --status-green: #4ade80;
-  --status-amber: #fbbf24;
-  --status-critical: #f87171;
+  --status-green: #e5e5e5;
+  --status-amber: #a3a3a3;
+  --status-critical: #ffffff;
 }
 
 @theme inline {

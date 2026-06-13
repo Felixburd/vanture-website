@@ -20,6 +20,8 @@ export async function DvtaPanel({
 }) {
   const t = await getTranslations('dvtaPanel')
   const tabs = (block.tabs ?? []).map((tab) => tab.label)
+  const iconUrl =
+    typeof block.icon === 'object' && block.icon?.url ? block.icon.url : '/vanture-mark.svg'
 
   return (
     <section id="dvta" className="scroll-mt-24 py-20 md:py-28">
@@ -89,6 +91,8 @@ export async function DvtaPanel({
 
           {/* Copy beside the panel */}
           <div className="lg:pt-6">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={iconUrl} alt="" className="mb-6 h-12 w-auto" />
             {block.heading ? (
               <h2 className="text-balance text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
                 {block.heading}

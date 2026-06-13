@@ -10,9 +10,10 @@ const badgeVariants = cva(
         default: 'border-transparent bg-primary text-primary-foreground',
         outline: 'border-border text-foreground',
         muted: 'border-transparent bg-muted text-muted-foreground',
-        green: 'border-transparent bg-status-green/15 text-status-green',
-        amber: 'border-transparent bg-status-amber/15 text-status-amber',
-        critical: 'border-transparent bg-status-critical/15 text-status-critical',
+        // Monochrome severity scale: green = subtle, amber = outlined, critical = solid
+        green: 'border border-border bg-transparent text-muted-foreground',
+        amber: 'border border-foreground/40 bg-transparent text-foreground',
+        critical: 'border-transparent bg-foreground text-background',
       },
     },
     defaultVariants: { variant: 'default' },

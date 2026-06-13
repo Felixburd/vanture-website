@@ -74,6 +74,15 @@ const IMG = {
   ecom: 'https://cdn.prod.website-files.com/6a108e4f6aac487ad29139a7/6a109418dc9c4de6766aa261_pexels-photo-6170405.jpeg',
   msp: 'https://cdn.prod.website-files.com/6a108e4f6aac487ad29139a7/6a1094181253c6442795c723_pexels-photo-37605911.jpeg',
   logo: 'https://cdn.prod.website-files.com/694f82d3ab726ade91d3acc4/694f8420fd4e67d5bc2c4e94_Fichier%201.png',
+  heroLandscape:
+    'https://cdn.prod.website-files.com/694f82d3ab726ade91d3acc4/6978c7980351d298984ff548_pexels-francesco-ungaro-3324591.jpg',
+  portrait:
+    'https://cdn.prod.website-files.com/694f82d3ab726ade91d3acc4/6978e4586cc662577a6b08dc_pexels-soulful-pizza-2080276-4107051.jpg',
+  icon: 'https://cdn.prod.website-files.com/694f82d3ab726ade91d3acc4/6978d6a16ba1e2dcfae2eae7_Vanture_Icon-Black.svg',
+  sonny:
+    'https://cdn.prod.website-files.com/694f82d3ab726ade91d3acc4/69e6709bce1f295e14beaf5f_pexels-sonny-12317362.jpg',
+  casper:
+    'https://cdn.prod.website-files.com/694f82d3ab726ade91d3acc4/69e66ebe1538181ef978bee4_pexels-casperstarenda-2224919.jpg',
 }
 
 // Section tone rhythm mirroring the brand site (light → dark → light → graydark …).
@@ -109,6 +118,10 @@ async function seed() {
   const ecom = await uploadImage(payload, IMG.ecom, 'Warehouse worker inspecting shipment packages')
   const msp = await uploadImage(payload, IMG.msp, 'IT professional managing systems in a server room')
   const logo = await uploadImage(payload, IMG.logo, 'Vanture')
+  const heroImg = await uploadImage(payload, IMG.heroLandscape, 'Abstract architectural detail')
+  const portraitImg = await uploadImage(payload, IMG.portrait, 'Person reviewing documents')
+  const audAdvisors = await uploadImage(payload, IMG.sonny, 'Advisor at work')
+  const audMergers = await uploadImage(payload, IMG.casper, 'Two parties meeting')
 
   // ── Globals ────────────────────────────────────────────────────────────
   await payload.updateGlobal({
@@ -387,18 +400,32 @@ async function seed() {
     },
   ]
 
+  // Inject tone + brand imagery into the home layout (same media in both locales).
+  const AUD_IMAGES = [audAdvisors, heroImg, portraitImg, audMergers]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const decorateHome = (layout: any[]) =>
+    layout.map((b, i) => {
+      const base = { ...b, tone: HOME_TONES[i] ?? 'light' }
+      if (b.blockType === 'hero') return { ...base, image: heroImg }
+      if (b.blockType === 'audience')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return { ...base, cards: b.cards.map((c: any, j: number) => ({ ...c, image: AUD_IMAGES[j] ?? null })) }
+      if (b.blockType === 'cta' && i === 6) return { ...base, image: portraitImg }
+      return base
+    })
+
   const home = await payload.create({
     collection: 'pages',
     locale: 'en',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    data: { title: 'Home', slug: 'home', layout: withTones(homeEN, HOME_TONES) as any },
+    data: { title: 'Home', slug: 'home', layout: decorateHome(homeEN) as any },
   })
   await payload.update({
     collection: 'pages',
     id: home.id,
     locale: 'fr-ca',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    data: { title: 'Accueil', layout: withTones(homeFR, HOME_TONES) as any },
+    data: { title: 'Accueil', layout: decorateHome(homeFR) as any },
   })
 
   // ── About page ─────────────────────────────────────────────────────────
