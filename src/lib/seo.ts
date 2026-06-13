@@ -12,10 +12,13 @@ export function docMetadata(seo: Seo, fallbackTitle?: string | null): Metadata {
   const description = seo?.description || undefined
   const img = seo?.image && typeof seo.image === 'object' ? seo.image.url : undefined
 
-  const meta: Metadata = { title, description }
+  // Omit undefined keys entirely — an explicit `title: undefined` suppresses the
+  // layout's `title.default` instead of falling back to it (e.g. blank home title).
+  const meta: Metadata = {}
+  if (title) meta.title = title
+  if (description) meta.description = description
   // Next overwrites (not deep-merges) `openGraph`, so only set it when this doc has
-  // its own share image. Otherwise the layout's default OG image is preserved on
-  // every page, while `title`/`description` above still apply per page.
+  // its own share image; otherwise the layout's default OG image is preserved.
   if (img) {
     meta.openGraph = { title, description, images: [{ url: img }] }
   }
