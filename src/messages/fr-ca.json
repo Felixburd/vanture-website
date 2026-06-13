@@ -1,0 +1,52 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "dvta": "DVTA",
+    "caseStudies": "Études de cas",
+    "about": "À propos de nous"
+  },
+  "common": {
+    "bookBriefing": "Réservez une séance",
+    "bookConfidentialBriefing": "Réservez une séance confidentielle",
+    "bookCall": "Réserver un appel",
+    "readMore": "Lire la suite",
+    "allCaseStudies": "Toutes les études de cas",
+    "caseStudies": "Études de cas",
+    "learn": "En savoir plus",
+    "contact": "Contact",
+    "aboutUs": "À propos de nous"
+  },
+  "newsletter": {
+    "heading": "Restez informé",
+    "body": "Recevez des mises à jour sur la gouvernance opérationnelle",
+    "placeholder": "Votre courriel",
+    "subscribe": "S'abonner",
+    "disclaimer": "Nous respectons votre vie privée. Vous pouvez vous désabonner à tout moment.",
+    "success": "Merci — votre abonnement est confirmé.",
+    "error": "Une erreur est survenue. Veuillez réessayer.",
+    "invalid": "Veuillez saisir une adresse courriel valide."
+  },
+  "dvtaPanel": {
+    "finding": "Constat",
+    "lens": "Perspective",
+    "status": "Statut"
+  },
+  "caseStudy": {
+    "breadcrumb": "Blogue > DVTA > Études de cas",
+    "indexTitle": "Études de cas",
+    "indexIntro": "Constatez par vous-même comment la DVTA a aidé des investisseurs à conclure des transactions avec plus de certitude.",
+    "publishedOn": "Publié le",
+    "moreAbout": "Pour en savoir plus sur la DVTA",
+    "ebitda": "BAIIA",
+    "asking": "Prix demandé",
+    "decisionSignal": "Signal de décision",
+    "twoViews": "Deux points de vue",
+    "traditionalDD": "Vérification diligente traditionnelle",
+    "dvta": "DVTA",
+    "theSetup": "Le contexte",
+    "whatSurfaced": "Ce que l'évaluation a révélé",
+    "theEvidence": "Les preuves",
+    "decisionImpact": "Décision et impact financier",
+    "takeaway": "À retenir"
+  }
+}

@@ -1,0 +1,29 @@
+# Render Blueprint for the Vanture website.
+# The Postgres instance (vanture-db) is provisioned separately; set DATABASE_URI
+# to its internal connection string in the service's environment.
+services:
+  - type: web
+    name: vanture-website
+    runtime: node
+    plan: starter
+    region: virginia
+    branch: main
+    buildCommand: pnpm install --frozen-lockfile && pnpm build
+    startCommand: pnpm start
+    healthCheckPath: /
+    autoDeployTrigger: commit
+    disk:
+      name: media
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: DATABASE_URI
+        sync: false
+      - key: PAYLOAD_SECRET
+        sync: false
+      - key: NEXT_PUBLIC_SERVER_URL
+        sync: false
+      - key: MEDIA_DIR
+        value: /var/data/media
+      - key: NODE_VERSION
+        value: '22.16.0'

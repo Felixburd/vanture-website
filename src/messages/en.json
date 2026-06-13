@@ -1,0 +1,52 @@
+{
+  "nav": {
+    "home": "Home",
+    "dvta": "DVTA",
+    "caseStudies": "Case Studies",
+    "about": "About us"
+  },
+  "common": {
+    "bookBriefing": "Book a briefing",
+    "bookConfidentialBriefing": "Book a confidential briefing",
+    "bookCall": "Book a call",
+    "readMore": "Read more",
+    "allCaseStudies": "All Case studies",
+    "caseStudies": "Case studies",
+    "learn": "Learn",
+    "contact": "Contact",
+    "aboutUs": "About us"
+  },
+  "newsletter": {
+    "heading": "Stay informed",
+    "body": "Get updates on operational governance",
+    "placeholder": "Your email",
+    "subscribe": "Subscribe",
+    "disclaimer": "We respect your privacy. Unsubscribe anytime.",
+    "success": "Thanks — you're subscribed.",
+    "error": "Something went wrong. Please try again.",
+    "invalid": "Please enter a valid email address."
+  },
+  "dvtaPanel": {
+    "finding": "Finding",
+    "lens": "Lens",
+    "status": "Status"
+  },
+  "caseStudy": {
+    "breadcrumb": "Blog > DVTA > Case Studies",
+    "indexTitle": "Case studies",
+    "indexIntro": "See for yourself how DVTA has helped capital close deals with more certainty.",
+    "publishedOn": "Published on",
+    "moreAbout": "To find out more about DVTA",
+    "ebitda": "EBITDA",
+    "asking": "Asking",
+    "decisionSignal": "Decision signal",
+    "twoViews": "Two views",
+    "traditionalDD": "Traditional due diligence",
+    "dvta": "DVTA",
+    "theSetup": "The setup",
+    "whatSurfaced": "What the assessment surfaced",
+    "theEvidence": "The evidence",
+    "decisionImpact": "Decision and dollar impact",
+    "takeaway": "Takeaway"
+  }
+}
