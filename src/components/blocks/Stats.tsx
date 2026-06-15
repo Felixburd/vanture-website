@@ -1,5 +1,5 @@
 import type { StatsBlock } from '@/payload-types'
-import { Container, Eyebrow } from './shared'
+import { Container } from './shared'
 
 export function Stats({ block }: { block: StatsBlock }) {
   return (
@@ -7,9 +7,8 @@ export function Stats({ block }: { block: StatsBlock }) {
       <Container>
         <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
           <div>
-            {block.eyebrow ? <Eyebrow>{block.eyebrow}</Eyebrow> : null}
             {block.heading ? (
-              <h2 className="mt-4 text-balance text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
+              <h2 className="text-balance text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
                 {block.heading}
               </h2>
             ) : null}

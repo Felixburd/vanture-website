@@ -106,12 +106,3 @@ export function GridFrame({
   )
 }
 
-export function Eyebrow({ children }: { children: React.ReactNode }) {
-  if (!children) return null
-  return (
-    <span className="inline-flex items-center gap-2.5 font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
-      <span aria-hidden className="h-px w-7 bg-current opacity-50" />
-      {children}
-    </span>
-  )
-}

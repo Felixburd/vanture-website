@@ -157,6 +157,26 @@
   --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, monospace;
 }
 
+/* Hero wireframe: a slow 3D rotation about the vertical axis, held at a tilt. */
+@keyframes vtr-orbit {
+  from {
+    transform: rotateX(16deg) rotateY(0deg);
+  }
+  to {
+    transform: rotateX(16deg) rotateY(360deg);
+  }
+}
+.vtr-orbit {
+  transform: rotateX(16deg);
+  animation: vtr-orbit 34s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .vtr-orbit {
+    animation: none;
+    transform: rotateX(16deg) rotateY(24deg);
+  }
+}
+
 @layer base {
   * {
     border-color: var(--border);

@@ -1,14 +1,13 @@
 import { RichText as LexicalRichText } from '@payloadcms/richtext-lexical/react'
 import type { RichTextBlock } from '@/payload-types'
-import { Container, Eyebrow } from './shared'
+import { Container } from './shared'
 
 export function RichTextView({ block }: { block: RichTextBlock }) {
   return (
     <section className="py-20 md:py-28">
       <Container className="max-w-3xl">
-        {block.eyebrow ? <Eyebrow>{block.eyebrow}</Eyebrow> : null}
         {block.heading ? (
-          <h2 className="mt-4 text-balance text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
+          <h2 className="text-balance text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
             {block.heading}
           </h2>
         ) : null}

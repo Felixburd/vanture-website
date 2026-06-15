@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import type { CtaBlock } from '@/payload-types'
 import type { Locale } from '@/i18n/routing'
-import { Buttons, Container, Eyebrow, Paragraphs } from './shared'
+import { Buttons, Container, Paragraphs } from './shared'
 
 export async function Cta({ block, locale }: { block: CtaBlock; locale: Locale }) {
   const img = typeof block.image === 'object' ? block.image : null
@@ -12,9 +12,8 @@ export async function Cta({ block, locale }: { block: CtaBlock; locale: Locale }
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
-              {block.eyebrow ? <Eyebrow>{block.eyebrow}</Eyebrow> : null}
               {block.heading ? (
-                <h2 className="mt-4 text-balance text-3xl font-medium leading-tight tracking-tight md:text-4xl">
+                <h2 className="text-balance text-3xl font-medium leading-tight tracking-tight md:text-4xl">
                   {block.heading}
                 </h2>
               ) : null}
@@ -44,9 +43,8 @@ export async function Cta({ block, locale }: { block: CtaBlock; locale: Locale }
     <section className="py-24 md:py-32">
       <Container>
         <div className="mx-auto max-w-3xl text-center">
-          {block.eyebrow ? <Eyebrow>{block.eyebrow}</Eyebrow> : null}
           {block.heading ? (
-            <h2 className="mt-4 text-balance text-4xl font-medium leading-tight tracking-tight md:text-5xl">
+            <h2 className="text-balance text-4xl font-medium leading-tight tracking-tight md:text-5xl">
               {block.heading}
             </h2>
           ) : null}
