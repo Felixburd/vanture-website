@@ -19,10 +19,10 @@ const toneClass: Record<string, string> = {
   graydark: 'tone-graydark',
 }
 
-function renderBlock(block: Block, locale: Locale) {
+function renderBlock(block: Block, locale: Locale, showHeroWireframe: boolean) {
   switch (block.blockType) {
     case 'hero':
-      return <Hero block={block} locale={locale} />
+      return <Hero block={block} locale={locale} wireframe={showHeroWireframe} />
     case 'stats':
       return <Stats block={block} />
     case 'dvtaPanel':
@@ -45,9 +45,12 @@ function renderBlock(block: Block, locale: Locale) {
 export async function RenderBlocks({
   blocks,
   locale,
+  showHeroWireframe = false,
 }: {
   blocks?: Page['layout']
   locale: Locale
+  /** Enable the ambient 3D hairline wireframe on this page's hero (About only). */
+  showHeroWireframe?: boolean
 }) {
   if (!blocks?.length) return null
   return (
@@ -61,7 +64,9 @@ export async function RenderBlocks({
               className={`${tone} relative bg-background text-foreground`}
             >
               <GridFrame top={i !== 0} />
-              <div className="relative z-10">{renderBlock(block, locale)}</div>
+              <div className="relative z-10">
+                {renderBlock(block, locale, showHeroWireframe)}
+              </div>
             </div>
           )
         }),

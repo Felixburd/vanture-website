@@ -23,5 +23,5 @@ export default async function AboutPage({ params }: Props) {
   const page = await getPage('about', locale)
   if (!page) notFound()
 
-  return <RenderBlocks blocks={page.layout} locale={locale} />
+  return <RenderBlocks blocks={page.layout} locale={locale} showHeroWireframe />
 }

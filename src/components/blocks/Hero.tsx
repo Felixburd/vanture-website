@@ -4,12 +4,20 @@ import type { Locale } from '@/i18n/routing'
 import { Buttons, Container } from './shared'
 import { HeroWireframe } from './HeroWireframe'
 
-export async function Hero({ block, locale }: { block: HeroBlock; locale: Locale }) {
+export async function Hero({
+  block,
+  locale,
+  wireframe = false,
+}: {
+  block: HeroBlock
+  locale: Locale
+  wireframe?: boolean
+}) {
   const img = typeof block.image === 'object' ? block.image : null
 
   return (
     <section className="relative overflow-hidden">
-      <HeroWireframe />
+      {wireframe ? <HeroWireframe /> : null}
       <Container className="relative z-10 py-24 md:py-32">
         <div
           className={
