@@ -11,7 +11,9 @@
   dark-teal (--btn) that inverts to light on dark tones for contrast.
 */
 :root {
-  --radius: 0.5rem;
+  /* Sharp by design — square corners read as engineered/instrument. Only
+     intentionally-circular elements (status dots) use rounded-full. */
+  --radius: 0px;
 
   --background: #f2f2f2;
   --foreground: #010202;
@@ -143,10 +145,12 @@
   --color-status-amber: var(--status-amber);
   --color-status-critical: var(--status-critical);
 
-  --radius-sm: calc(var(--radius) - 2px);
-  --radius-md: var(--radius);
-  --radius-lg: calc(var(--radius) + 2px);
-  --radius-xl: calc(var(--radius) + 6px);
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-roboto-flex), var(--font-inter), sans-serif;

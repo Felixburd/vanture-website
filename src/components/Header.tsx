@@ -11,7 +11,7 @@ export async function Header({ locale }: { locale: Locale }) {
 
   return (
     <header className="tone-light sticky top-0 z-50 border-b bg-background/90 backdrop-blur">
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
+      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between border-x border-border px-6">
         <Link
           href="/"
           locale={locale}

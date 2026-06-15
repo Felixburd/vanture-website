@@ -8,6 +8,7 @@ import { Audience } from './Audience'
 import { Comparison } from './Comparison'
 import { Cta } from './Cta'
 import { RichTextView } from './RichText'
+import { GridFrame } from './shared'
 
 type Block = NonNullable<Page['layout']>[number]
 
@@ -52,11 +53,15 @@ export async function RenderBlocks({
   return (
     <>
       {await Promise.all(
-        blocks.map(async (block: Block) => {
+        blocks.map(async (block: Block, i: number) => {
           const tone = toneClass[block.tone ?? 'light'] ?? 'tone-light'
           return (
-            <div key={block.id} className={`${tone} bg-background text-foreground`}>
-              {renderBlock(block, locale)}
+            <div
+              key={block.id}
+              className={`${tone} relative bg-background text-foreground`}
+            >
+              <GridFrame top={i !== 0} />
+              <div className="relative z-10">{renderBlock(block, locale)}</div>
             </div>
           )
         }),

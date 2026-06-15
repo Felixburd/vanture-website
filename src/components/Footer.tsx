@@ -1,5 +1,6 @@
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from 'lucide-react'
 import { getFooter } from '@/lib/payload'
+import { GridFrame } from './blocks/shared'
 import { NewsletterForm } from './NewsletterForm'
 import type { Locale } from '@/i18n/routing'
 
@@ -16,8 +17,9 @@ export async function Footer({ locale }: { locale: Locale }) {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="tone-dark border-t bg-background text-foreground">
-      <div className="mx-auto w-full max-w-6xl px-6 py-14">
+    <footer className="tone-dark relative bg-background text-foreground">
+      <GridFrame top bottom />
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 py-14">
         <div className="flex flex-col justify-between gap-10 md:flex-row md:items-start">
           <div className="max-w-md">
             {footer.newsletterHeading ? (
