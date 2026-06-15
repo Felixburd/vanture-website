@@ -1,13 +1,31 @@
 import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
 import { getHeader } from '@/lib/payload'
-import { CMSLink } from '@/components/CMSLink'
+import { CMSLink, resolveHref } from '@/components/CMSLink'
 import { LocaleSwitcher } from './LocaleSwitcher'
+import { MobileNav, type NavLink } from './MobileNav'
 import type { Locale } from '@/i18n/routing'
 
 export async function Header({ locale }: { locale: Locale }) {
   const header = await getHeader(locale)
   const logo = typeof header.logo === 'object' ? header.logo : null
+
+  // Pre-resolve nav links + CTA for the client-side mobile menu.
+  const mobileNavItems: NavLink[] = await Promise.all(
+    (header.navItems ?? []).map(async (item) => {
+      const { label, href, external, newTab } = await resolveHref(item.link)
+      return { label, href, external, newTab }
+    }),
+  )
+  const ctaResolved = await resolveHref(header.cta)
+  const mobileCta: NavLink | null = ctaResolved.label
+    ? {
+        label: ctaResolved.label,
+        href: ctaResolved.href,
+        external: ctaResolved.external,
+        newTab: ctaResolved.newTab,
+      }
+    : null
 
   return (
     <header className="tone-light sticky top-0 z-50 border-b bg-background/90 backdrop-blur">
@@ -50,6 +68,7 @@ export async function Header({ locale }: { locale: Locale }) {
             size="sm"
             className="hidden sm:inline-flex"
           />
+          <MobileNav locale={locale} navItems={mobileNavItems} cta={mobileCta} />
         </div>
       </div>
     </header>

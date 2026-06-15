@@ -81,7 +81,7 @@ export function GridFrame({
   const plus =
     'pointer-events-none absolute z-10 font-mono text-xs leading-none text-muted-foreground select-none'
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
+    <div aria-hidden className="pointer-events-none absolute inset-0 z-0 px-4 md:px-0">
       <div
         className={cn(
           'relative mx-auto h-full max-w-6xl border-x border-border',

@@ -61,7 +61,7 @@ export async function RenderBlocks({
           return (
             <div
               key={block.id}
-              className={`${tone} relative bg-background text-foreground`}
+              className={`${tone} relative overflow-x-clip bg-background text-foreground`}
             >
               <GridFrame top={i !== 0} />
               <div className="relative z-10">

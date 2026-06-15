@@ -24,7 +24,7 @@ export async function Audience({
   return (
     <section className="py-20 md:py-28">
       <Container>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 lg:auto-rows-[15rem]">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 lg:auto-rows-[minmax(15rem,auto)]">
           {await Promise.all(
             cards.map(async (card, i) => {
               const img = typeof card.image === 'object' ? card.image : null

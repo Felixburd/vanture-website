@@ -12,8 +12,9 @@ export function Comparison({ block }: { block: ComparisonBlock }) {
             </h2>
           ) : null}
         </div>
-        <div className="mt-10 overflow-x-auto rounded-xl border border-border">
-          <table className="w-full min-w-[34rem] text-left text-sm">
+        {/* md+ : full comparison table */}
+        <div className="mt-10 hidden overflow-hidden rounded-xl border border-border md:block">
+          <table className="w-full text-left text-sm">
             <thead className="bg-card/60 font-mono text-[11px] uppercase tracking-[0.12em]">
               <tr>
                 <th className="px-5 py-4 font-medium text-muted-foreground">Dimension</th>
@@ -33,6 +34,29 @@ export function Comparison({ block }: { block: ComparisonBlock }) {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* mobile : one stacked card per dimension, no sideways scroll */}
+        <div className="mt-8 grid gap-3 md:hidden">
+          {block.rows?.map((row, i) => (
+            <div key={row.id ?? i} className="rounded-xl border border-border bg-card p-5">
+              <p className="font-medium">{row.dimension}</p>
+              <dl className="mt-4 grid gap-4">
+                <div className="grid gap-1">
+                  <dt className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
+                    {block.colTraditional}
+                  </dt>
+                  <dd className="text-sm text-muted-foreground">{row.traditional}</dd>
+                </div>
+                <div className="grid gap-1 border-t border-border/60 pt-4">
+                  <dt className="font-mono text-[11px] uppercase tracking-[0.12em] text-primary">
+                    {block.colDvta}
+                  </dt>
+                  <dd className="text-sm">{row.dvta}</dd>
+                </div>
+              </dl>
+            </div>
+          ))}
         </div>
       </Container>
     </section>
