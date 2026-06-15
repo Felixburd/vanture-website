@@ -1,5 +1,4 @@
 import { Link } from '@/i18n/navigation'
-import { getSiteSettings } from '@/lib/payload'
 import type { Locale } from '@/i18n/routing'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
@@ -24,13 +23,14 @@ function slugToPath(slug?: string | null) {
   return `/${slug}`
 }
 
-export async function resolveHref(link: LinkGroup, locale: Locale) {
+export async function resolveHref(link: LinkGroup) {
   const label = link?.label ?? ''
   const newTab = Boolean(link?.newTab)
   if (!link) return { href: '#', external: false, label, newTab }
   if (link.type === 'booking') {
-    const settings = await getSiteSettings(locale)
-    return { href: settings?.bookingUrl || '#', external: true, label, newTab }
+    // Every "Book a briefing / Contact" CTA now routes to the in-app multi-step
+    // briefing form; the locale-aware <Link> prepends /fr-ca as needed.
+    return { href: '/briefing', external: false, label, newTab: false }
   }
   if (link.type === 'page') {
     const slug = typeof link.page === 'object' && link.page ? link.page.slug : undefined
@@ -55,7 +55,7 @@ export async function CMSLink({
   size?: Size
   children?: React.ReactNode
 }) {
-  const { href, external, label, newTab } = await resolveHref(link, locale)
+  const { href, external, label, newTab } = await resolveHref(link)
   const cls = variant ? cn(buttonVariants({ variant, size }), className) : className
   const content = children ?? label
   if (!content) return null
