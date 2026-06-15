@@ -76,9 +76,10 @@
   --ring: #ffffff;
   --btn: #f2f2f2;
   --btn-foreground: #010202;
-  --status-green: #e5e5e5;
-  --status-amber: #a3a3a3;
-  --status-critical: #ffffff;
+  /* Traffic-light stays legible on dark surfaces too */
+  --status-green: #34d399;
+  --status-amber: #fbbf24;
+  --status-critical: #f87171;
 }
 
 .tone-graydark {
@@ -99,9 +100,23 @@
   --ring: #ffffff;
   --btn: #f2f2f2;
   --btn-foreground: #010202;
-  --status-green: #e5e5e5;
-  --status-amber: #a3a3a3;
-  --status-critical: #ffffff;
+  --status-green: #34d399;
+  --status-amber: #fbbf24;
+  --status-critical: #f87171;
+}
+
+/*
+  Depth for dark sections: a faint top glow plus barely-there film grain so the
+  near-black surfaces read as lit material rather than empty voids. Light
+  sections are deliberately left clean for contrast.
+*/
+.tone-dark,
+.tone-graydark {
+  background-image:
+    radial-gradient(125% 90% at 50% -25%, rgba(255, 255, 255, 0.07), transparent 55%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  background-repeat: no-repeat, repeat;
+  background-size: 100% 100%, 180px 180px;
 }
 
 @theme inline {
@@ -135,6 +150,7 @@
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-roboto-flex), var(--font-inter), sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, monospace;
 }
 
 @layer base {

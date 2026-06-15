@@ -30,8 +30,13 @@ export async function DvtaPanel({
           {/* The sample assessment panel */}
           <div className="rounded-2xl border border-border bg-card p-5 shadow-xl md:p-7">
             {block.panelLabel ? (
-              <div className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                {block.panelLabel}
+              <div className="mb-4 flex items-center justify-between font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+                <span>{block.panelLabel}</span>
+                <span aria-hidden className="flex items-center gap-1.5 opacity-70">
+                  <span className="h-1.5 w-1.5 rounded-full bg-status-green" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-status-amber" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-status-critical" />
+                </span>
               </div>
             ) : null}
 
@@ -41,11 +46,13 @@ export async function DvtaPanel({
             <div className="mt-5 grid grid-cols-2 gap-3">
               {block.scoreCards?.map((card, i) => (
                 <div key={card.id ?? i} className="rounded-lg border border-border/70 bg-background/40 p-3">
-                  <div className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                  <div className="font-mono text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
                     {card.label}
                   </div>
-                  <div className="mt-1 flex items-baseline justify-between">
-                    <span className="text-2xl font-semibold tabular-nums">{card.value}</span>
+                  <div className="mt-1.5 flex items-end justify-between">
+                    <span className="font-mono text-3xl font-medium leading-none tabular-nums">
+                      {card.value}
+                    </span>
                     <Badge variant={statusVariant[card.status]}>{card.status}</Badge>
                   </div>
                 </div>
@@ -56,18 +63,20 @@ export async function DvtaPanel({
             {block.findings?.length ? (
               <div className="mt-5 overflow-hidden rounded-lg border border-border/70">
                 <table className="w-full text-left text-sm">
-                  <thead className="bg-background/40 text-xs uppercase tracking-wide text-muted-foreground">
+                  <thead className="bg-background/40 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
                     <tr>
-                      <th className="px-3 py-2 font-medium">{t('finding')}</th>
-                      <th className="px-3 py-2 font-medium">{t('lens')}</th>
-                      <th className="px-3 py-2 text-right font-medium">{t('status')}</th>
+                      <th className="px-3 py-2.5 font-medium">{t('finding')}</th>
+                      <th className="px-3 py-2.5 font-medium">{t('lens')}</th>
+                      <th className="px-3 py-2.5 text-right font-medium">{t('status')}</th>
                     </tr>
                   </thead>
                   <tbody>
                     {block.findings.map((f, i) => (
                       <tr key={f.id ?? i} className="border-t border-border/60">
                         <td className="px-3 py-2.5">{f.finding}</td>
-                        <td className="px-3 py-2.5 text-muted-foreground">{f.lens}</td>
+                        <td className="px-3 py-2.5 font-mono text-xs uppercase tracking-wide text-muted-foreground">
+                          {f.lens}
+                        </td>
                         <td className="px-3 py-2.5 text-right">
                           <Badge variant={statusVariant[f.status]}>{f.status}</Badge>
                         </td>
@@ -82,7 +91,9 @@ export async function DvtaPanel({
             {block.decision?.text ? (
               <div className="mt-5 rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm leading-relaxed">
                 {block.decision.signal ? (
-                  <strong className="text-primary">{block.decision.signal} </strong>
+                  <span className="mb-1.5 block font-mono text-xs font-semibold uppercase tracking-[0.12em] text-primary">
+                    {block.decision.signal}
+                  </span>
                 ) : null}
                 <span className="text-muted-foreground">{block.decision.text}</span>
               </div>

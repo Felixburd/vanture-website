@@ -22,7 +22,7 @@ export function Stats({ block }: { block: StatsBlock }) {
           <div className="grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-1">
             {block.stats?.map((s, i) => (
               <div key={s.id ?? i} className="bg-card p-7">
-                <div className="text-4xl font-semibold tracking-tight text-primary">
+                <div className="font-mono text-4xl font-medium tracking-tight tabular-nums text-primary">
                   {s.value}
                 </div>
                 <h3 className="mt-2 text-base font-medium leading-snug">{s.label}</h3>

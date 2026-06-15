@@ -23,12 +23,12 @@ export function Lenses({ block }: { block: LensesBlock }) {
               className="flex flex-col rounded-xl border border-border bg-card p-6"
             >
               <div className="flex items-center justify-between">
-                <span className="rounded-md bg-primary/15 px-2 py-0.5 text-xs font-semibold text-primary">
+                <span className="rounded-md bg-primary/15 px-2 py-0.5 font-mono text-xs font-medium uppercase tracking-wider text-primary">
                   {lens.code}
                 </span>
                 {lens.failurePercent ? (
                   <span className="text-right text-sm">
-                    <span className="font-semibold">{lens.failurePercent}</span>{' '}
+                    <span className="font-mono font-medium tabular-nums">{lens.failurePercent}</span>{' '}
                     <span className="text-muted-foreground">{lens.failureLabel}</span>
                   </span>
                 ) : null}

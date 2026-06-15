@@ -14,7 +14,7 @@ export function DvtaTabs({ tabs }: { tabs: string[] }) {
           type="button"
           onClick={() => setActive(i)}
           className={cn(
-            'rounded-md px-3 py-1.5 text-xs font-medium transition-colors',
+            'rounded-md px-3 py-1.5 font-mono text-xs font-medium uppercase tracking-wide transition-colors',
             i === active
               ? 'bg-primary/15 text-primary'
               : 'text-muted-foreground hover:text-foreground',

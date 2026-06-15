@@ -13,15 +13,15 @@ export function Comparison({ block }: { block: ComparisonBlock }) {
             </h2>
           ) : null}
         </div>
-        <div className="mt-10 overflow-hidden rounded-xl border border-border">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-card/60">
+        <div className="mt-10 overflow-x-auto rounded-xl border border-border">
+          <table className="w-full min-w-[34rem] text-left text-sm">
+            <thead className="bg-card/60 font-mono text-[11px] uppercase tracking-[0.12em]">
               <tr>
-                <th className="px-5 py-4 font-semibold">Dimension</th>
+                <th className="px-5 py-4 font-medium text-muted-foreground">Dimension</th>
                 <th className="px-5 py-4 font-medium text-muted-foreground">
                   {block.colTraditional}
                 </th>
-                <th className="px-5 py-4 font-semibold text-primary">{block.colDvta}</th>
+                <th className="px-5 py-4 font-medium text-primary">{block.colDvta}</th>
               </tr>
             </thead>
             <tbody>
