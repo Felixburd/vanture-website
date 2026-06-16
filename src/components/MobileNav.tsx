@@ -68,46 +68,37 @@ export function MobileNav({
       </button>
 
       {open ? (
-        <>
-          <button
-            type="button"
-            aria-hidden
-            tabIndex={-1}
-            onClick={() => setOpen(false)}
-            className="fixed inset-x-0 bottom-0 top-16 z-40 cursor-default bg-foreground/10"
-          />
-          <nav className="fixed inset-x-0 top-16 z-40 border-b bg-background/95 backdrop-blur">
-            <div className="mx-auto flex w-full max-w-6xl flex-col px-6 py-2">
-              {navItems.map((item, i) =>
-                item.external ? (
-                  <a
-                    key={i}
-                    href={item.href}
-                    target={item.newTab ? '_blank' : undefined}
-                    rel={item.newTab ? 'noopener noreferrer' : undefined}
-                    className={itemClass}
-                    onClick={() => setOpen(false)}
-                  >
-                    {item.label}
-                  </a>
-                ) : (
-                  <Link key={i} href={item.href} locale={locale} className={itemClass}>
-                    {item.label}
-                  </Link>
-                ),
-              )}
-              {cta ? (
-                <Link
-                  href={cta.href}
-                  locale={locale}
-                  className={cn(buttonVariants({ variant: 'default' }), 'mt-4 mb-2 w-full')}
+        <nav className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto bg-background">
+          <div className="mx-auto flex w-full max-w-6xl flex-col px-6 py-2">
+            {navItems.map((item, i) =>
+              item.external ? (
+                <a
+                  key={i}
+                  href={item.href}
+                  target={item.newTab ? '_blank' : undefined}
+                  rel={item.newTab ? 'noopener noreferrer' : undefined}
+                  className={itemClass}
+                  onClick={() => setOpen(false)}
                 >
-                  {cta.label}
+                  {item.label}
+                </a>
+              ) : (
+                <Link key={i} href={item.href} locale={locale} className={itemClass}>
+                  {item.label}
                 </Link>
-              ) : null}
-            </div>
-          </nav>
-        </>
+              ),
+            )}
+            {cta ? (
+              <Link
+                href={cta.href}
+                locale={locale}
+                className={cn(buttonVariants({ variant: 'default' }), 'mt-4 mb-2 w-full')}
+              >
+                {cta.label}
+              </Link>
+            ) : null}
+          </div>
+        </nav>
       ) : null}
     </div>
   )
