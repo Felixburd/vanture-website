@@ -29,7 +29,17 @@
   "dvtaPanel": {
     "finding": "Constat",
     "lens": "Perspective",
-    "status": "Statut"
+    "status": "Statut",
+    "score": "Score",
+    "noFindings": "Aucun constat critique sur cette perspective.",
+    "tabs": {
+      "summary": "Sommaire",
+      "revenue": "Revenus",
+      "execution": "Exécution",
+      "spending": "Dépenses",
+      "keyPerson": "Personnes clés",
+      "decision": "Décision"
+    }
   },
   "caseStudy": {
     "breadcrumb": "Blogue > DVTA > Études de cas",

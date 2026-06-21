@@ -1,15 +1,38 @@
 import { getTranslations } from 'next-intl/server'
 import type { DvtaPanelBlock } from '@/payload-types'
 import type { Locale } from '@/i18n/routing'
-import { Badge } from '@/components/ui/badge'
 import { Buttons, Container } from './shared'
-import { DvtaTabs } from './DvtaTabs'
+import { DvtaTabs, type LensPane } from './DvtaTabs'
 
-const statusVariant = {
-  GREEN: 'green',
-  AMBER: 'amber',
-  CRITICAL: 'critical',
-} as const
+// The DVTA methodology always scores four lenses in a fixed order (L1–L4), so
+// we key panes by position rather than by parsing the score-card label.
+const LENS_KEYS = ['revenue', 'execution', 'spending', 'keyPerson'] as const
+
+// A finding carries a free-text `lens` string that varies by locale; these
+// aliases map it back to a stable key so findings land under the right pane.
+const LENS_ALIASES: Record<(typeof LENS_KEYS)[number], string[]> = {
+  revenue: ['revenue', 'revenus'],
+  execution: ['execution', 'exécution'],
+  spending: ['spending', 'dépenses'],
+  keyPerson: ['key person', 'personnes clés'],
+}
+
+const normalize = (s: string) =>
+  s
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .trim()
+
+function lensKeyForFinding(lens: string, scoreLabels: string[]): number {
+  const n = normalize(lens)
+  // Primary: match the finding's lens text against the alias table.
+  for (let i = 0; i < LENS_KEYS.length; i++) {
+    if (LENS_ALIASES[LENS_KEYS[i]].some((a) => n.includes(normalize(a)))) return i
+  }
+  // Fallback: the lens text appears inside a score-card label.
+  return scoreLabels.findIndex((label) => normalize(label).includes(n))
+}
 
 export async function DvtaPanel({
   block,
@@ -19,7 +42,23 @@ export async function DvtaPanel({
   locale: Locale
 }) {
   const t = await getTranslations('dvtaPanel')
-  const tabs = (block.tabs ?? []).map((tab) => tab.label)
+
+  const scoreCards = block.scoreCards ?? []
+  const scoreLabels = scoreCards.map((c) => c.label)
+
+  // Build one pane per score card, attaching findings by lens.
+  const lenses: LensPane[] = scoreCards.map((card, i) => ({
+    key: LENS_KEYS[i] ?? `lens-${i}`,
+    label: t(`tabs.${LENS_KEYS[i] ?? 'summary'}`),
+    scoreLabel: card.label,
+    value: card.value,
+    status: card.status,
+    findings:
+      block.findings
+        ?.filter((f) => lensKeyForFinding(f.lens, scoreLabels) === i)
+        .map((f) => ({ finding: f.finding, status: f.status })) ?? [],
+  }))
+
   const iconUrl =
     typeof block.icon === 'object' && block.icon?.url ? block.icon.url : '/vanture-mark.svg'
 
@@ -40,64 +79,14 @@ export async function DvtaPanel({
               </div>
             ) : null}
 
-            <DvtaTabs tabs={tabs} />
-
-            {/* Score cards */}
-            <div className="mt-5 grid grid-cols-2 gap-3">
-              {block.scoreCards?.map((card, i) => (
-                <div key={card.id ?? i} className="rounded-lg border border-border/70 bg-background/40 p-3">
-                  <div className="font-mono text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-                    {card.label}
-                  </div>
-                  <div className="mt-1.5 flex items-end justify-between">
-                    <span className="font-mono text-3xl font-medium leading-none tabular-nums">
-                      {card.value}
-                    </span>
-                    <Badge variant={statusVariant[card.status]}>{card.status}</Badge>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Findings table */}
-            {block.findings?.length ? (
-              <div className="mt-5 overflow-hidden rounded-lg border border-border/70">
-                <table className="w-full text-left text-sm">
-                  <thead className="bg-background/40 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
-                    <tr>
-                      <th className="px-3 py-2.5 font-medium">{t('finding')}</th>
-                      <th className="px-3 py-2.5 font-medium">{t('lens')}</th>
-                      <th className="px-3 py-2.5 text-right font-medium">{t('status')}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {block.findings.map((f, i) => (
-                      <tr key={f.id ?? i} className="border-t border-border/60">
-                        <td className="px-3 py-2.5">{f.finding}</td>
-                        <td className="px-3 py-2.5 font-mono text-xs uppercase tracking-wide text-muted-foreground">
-                          {f.lens}
-                        </td>
-                        <td className="px-3 py-2.5 text-right">
-                          <Badge variant={statusVariant[f.status]}>{f.status}</Badge>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : null}
-
-            {/* Decision */}
-            {block.decision?.text ? (
-              <div className="mt-5 rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm leading-relaxed">
-                {block.decision.signal ? (
-                  <span className="mb-1.5 block font-mono text-xs font-semibold uppercase tracking-[0.12em] text-primary">
-                    {block.decision.signal}
-                  </span>
-                ) : null}
-                <span className="text-muted-foreground">{block.decision.text}</span>
-              </div>
-            ) : null}
+            <DvtaTabs
+              summaryLabel={t('tabs.summary')}
+              decisionLabel={t('tabs.decision')}
+              scoreLabel={t('score')}
+              noFindingsLabel={t('noFindings')}
+              lenses={lenses}
+              decision={block.decision}
+            />
           </div>
 
           {/* Copy beside the panel */}

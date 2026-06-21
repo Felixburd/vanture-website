@@ -29,7 +29,17 @@
   "dvtaPanel": {
     "finding": "Finding",
     "lens": "Lens",
-    "status": "Status"
+    "status": "Status",
+    "score": "Score",
+    "noFindings": "No critical findings on this lens.",
+    "tabs": {
+      "summary": "Summary",
+      "revenue": "Revenue",
+      "execution": "Execution",
+      "spending": "Spending",
+      "keyPerson": "Key Person",
+      "decision": "Decision"
+    }
   },
   "caseStudy": {
     "breadcrumb": "Blog > DVTA > Case Studies",
