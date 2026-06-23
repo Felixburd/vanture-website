@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Link, usePathname } from '@/i18n/navigation'
 import type { Locale } from '@/i18n/routing'
 import { cn } from '@/lib/utils'
@@ -14,10 +15,16 @@ export type NavLink = {
 }
 
 /**
- * Mobile-only nav: a hamburger toggle that opens a full-width panel below the
+ * Mobile-only nav: a hamburger toggle that opens a full-screen panel below the
  * header bar. Nav items are pre-resolved server-side (label + href) so this
  * stays a light client component. Hidden at `md` and up, where the inline nav
  * takes over.
+ *
+ * The open panel is portaled to <body>: the header sets `backdrop-blur`, which
+ * makes it the containing block for `fixed` descendants — rendering the panel
+ * in place would resolve its `top-16 bottom-0` against the 64px header box and
+ * collapse it to zero height. The portal lets `fixed` resolve against the
+ * viewport so the panel fills the screen as intended.
  */
 export function MobileNav({
   locale,
@@ -67,39 +74,42 @@ export function MobileNav({
         </svg>
       </button>
 
-      {open ? (
-        <nav className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto bg-background">
-          <div className="mx-auto flex w-full max-w-6xl flex-col px-6 py-2">
-            {navItems.map((item, i) =>
-              item.external ? (
-                <a
-                  key={i}
-                  href={item.href}
-                  target={item.newTab ? '_blank' : undefined}
-                  rel={item.newTab ? 'noopener noreferrer' : undefined}
-                  className={itemClass}
-                  onClick={() => setOpen(false)}
-                >
-                  {item.label}
-                </a>
-              ) : (
-                <Link key={i} href={item.href} locale={locale} className={itemClass}>
-                  {item.label}
-                </Link>
-              ),
-            )}
-            {cta ? (
-              <Link
-                href={cta.href}
-                locale={locale}
-                className={cn(buttonVariants({ variant: 'default' }), 'mt-4 mb-2 w-full')}
-              >
-                {cta.label}
-              </Link>
-            ) : null}
-          </div>
-        </nav>
-      ) : null}
+      {open
+        ? createPortal(
+            <nav className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto bg-background md:hidden">
+              <div className="mx-auto flex w-full max-w-6xl flex-col px-6 py-2">
+                {navItems.map((item, i) =>
+                  item.external ? (
+                    <a
+                      key={i}
+                      href={item.href}
+                      target={item.newTab ? '_blank' : undefined}
+                      rel={item.newTab ? 'noopener noreferrer' : undefined}
+                      className={itemClass}
+                      onClick={() => setOpen(false)}
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <Link key={i} href={item.href} locale={locale} className={itemClass}>
+                      {item.label}
+                    </Link>
+                  ),
+                )}
+                {cta ? (
+                  <Link
+                    href={cta.href}
+                    locale={locale}
+                    className={cn(buttonVariants({ variant: 'default' }), 'mt-4 mb-2 w-full')}
+                  >
+                    {cta.label}
+                  </Link>
+                ) : null}
+              </div>
+            </nav>,
+            document.body,
+          )
+        : null}
     </div>
   )
 }
