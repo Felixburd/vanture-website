@@ -42,7 +42,8 @@
     }
   },
   "caseStudy": {
-    "breadcrumb": "Blogue > DVTA > Études de cas",
+    "breadcrumb": "DVTA > Études de cas",
+    "backToIndex": "Retour aux études de cas",
     "indexTitle": "Études de cas",
     "indexIntro": "Constatez par vous-même comment la DVTA a aidé des investisseurs à conclure des transactions avec plus de certitude.",
     "publishedOn": "Publié le",
