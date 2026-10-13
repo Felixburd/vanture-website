@@ -42,7 +42,8 @@
     }
   },
   "caseStudy": {
-    "breadcrumb": "Blog > DVTA > Case Studies",
+    "breadcrumb": "DVTA > Case Studies",
+    "backToIndex": "Back to case studies",
     "indexTitle": "Case studies",
     "indexIntro": "See for yourself how DVTA has helped capital close deals with more certainty.",
     "publishedOn": "Published on",
