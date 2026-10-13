@@ -13,6 +13,7 @@ const RESERVED_SLUGS = [
   'api',
   'graphql',
   'graphql-playground',
+  'og',
   ...routing.locales,
 ]
 
