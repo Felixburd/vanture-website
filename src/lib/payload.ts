@@ -17,6 +17,18 @@ export const getPage = cache(async (slug: string, locale: Locale) => {
   return docs[0] ?? null
 })
 
+/** Slug + last edit of every page — enough for the sitemap. */
+export const getPages = cache(async () => {
+  const payload = await getPayloadClient()
+  const { docs } = await payload.find({
+    collection: 'pages',
+    select: { slug: true, updatedAt: true },
+    depth: 0,
+    pagination: false,
+  })
+  return docs
+})
+
 export const getCaseStudies = cache(async (locale: Locale) => {
   const payload = await getPayloadClient()
   const { docs } = await payload.find({

@@ -139,7 +139,7 @@ export interface Page {
   id: number;
   title: string;
   /**
-   * Use "home" for the homepage, "about" for the About page.
+   * Published at /<slug> (EN) and /fr-ca/<slug> (FR-CA). Use "home" for the homepage, "about" for the About page.
    */
   slug: string;
   layout?:
