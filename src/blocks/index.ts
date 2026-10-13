@@ -183,6 +183,32 @@ export const RichTextBlock: Block = {
   ],
 }
 
+/** FAQ: question/answer disclosure list; pages with one emit FAQPage JSON-LD. */
+export const FaqBlock: Block = {
+  slug: 'faq',
+  interfaceName: 'FaqBlock',
+  labels: { singular: 'FAQ', plural: 'FAQs' },
+  fields: [
+    { name: 'eyebrow', type: 'text', localized: true },
+    { name: 'heading', type: 'textarea', localized: true },
+    {
+      name: 'items',
+      type: 'array',
+      labels: { singular: 'Question', plural: 'Questions' },
+      fields: [
+        { name: 'question', type: 'text', localized: true, required: true },
+        {
+          name: 'answer',
+          type: 'textarea',
+          localized: true,
+          required: true,
+          admin: { description: 'Plain text; separate paragraphs with a blank line.' },
+        },
+      ],
+    },
+  ],
+}
+
 /** Section background tone, shared by every block. */
 const toneField: Field = {
   name: 'tone',
@@ -206,4 +232,5 @@ export const layoutBlocks: Block[] = [
   ComparisonBlock,
   CtaBlock,
   RichTextBlock,
+  FaqBlock,
 ].map((b) => ({ ...b, fields: [toneField, ...b.fields] }))

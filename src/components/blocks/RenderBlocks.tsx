@@ -1,5 +1,6 @@
 import type { Page } from '@/payload-types'
 import type { Locale } from '@/i18n/routing'
+import { JsonLd } from '@/components/JsonLd'
 import { Hero } from './Hero'
 import { Stats } from './Stats'
 import { DvtaPanel } from './DvtaPanel'
@@ -8,6 +9,7 @@ import { Audience } from './Audience'
 import { Comparison } from './Comparison'
 import { Cta } from './Cta'
 import { RichTextView } from './RichText'
+import { Faq, faqStructuredData } from './Faq'
 import { GridFrame } from './shared'
 
 type Block = NonNullable<Page['layout']>[number]
@@ -37,6 +39,8 @@ function renderBlock(block: Block, locale: Locale, showHeroWireframe: boolean) {
       return <Cta block={block} locale={locale} />
     case 'richText':
       return <RichTextView block={block} />
+    case 'faq':
+      return <Faq block={block} />
     default:
       return null
   }
@@ -53,8 +57,13 @@ export async function RenderBlocks({
   showHeroWireframe?: boolean
 }) {
   if (!blocks?.length) return null
+  const faqData = faqStructuredData(
+    blocks.filter((b): b is Extract<Block, { blockType: 'faq' }> => b.blockType === 'faq'),
+    locale,
+  )
   return (
     <>
+      {faqData ? <JsonLd data={faqData} /> : null}
       {await Promise.all(
         blocks.map(async (block: Block, i: number) => {
           const tone = toneClass[block.tone ?? 'light'] ?? 'tone-light'
