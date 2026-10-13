@@ -5,14 +5,14 @@ import { setRequestLocale } from 'next-intl/server'
 import { routing, type Locale } from '@/i18n/routing'
 import { getPage } from '@/lib/payload'
 import { RenderBlocks } from '@/components/blocks/RenderBlocks'
-import { docMetadata } from '@/lib/seo'
+import { pageMetadata } from '@/lib/seo'
 
 type Props = { params: Promise<{ locale: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   const page = await getPage('about', locale as Locale)
-  return docMetadata(page?.seo, page?.title)
+  return pageMetadata({ locale: locale as Locale, path: '/about', seo: page?.seo, title: page?.title })
 }
 
 export default async function AboutPage({ params }: Props) {

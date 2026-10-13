@@ -10,7 +10,8 @@ import { getCaseStudies, getCaseStudy } from '@/lib/payload'
 import { Container, Paragraphs } from '@/components/blocks/shared'
 import { Badge } from '@/components/ui/badge'
 import { CMSLink } from '@/components/CMSLink'
-import { docMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/JsonLd'
+import { SITE_URL, absoluteUrl, localePath, pageMetadata } from '@/lib/seo'
 
 type Props = { params: Promise<{ locale: string; slug: string }> }
 
@@ -28,7 +29,16 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params
   const cs = await getCaseStudy(slug, locale as Locale)
-  return docMetadata(cs?.seo, cs?.title)
+  if (!cs) return {}
+  return pageMetadata({
+    locale: locale as Locale,
+    path: `/case-studies/${slug}`,
+    seo: cs.seo,
+    title: cs.title,
+    description: cs.cardSummary,
+    image: cs.heroImage,
+    article: { publishedTime: cs.publishedDate, modifiedTime: cs.updatedAt },
+  })
 }
 
 export default async function CaseStudyPage({ params }: Props) {
@@ -45,6 +55,40 @@ export default async function CaseStudyPage({ params }: Props) {
     ? new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(new Date(cs.publishedDate))
     : null
 
+  const url = absoluteUrl(localePath(locale, `/case-studies/${cs.slug}`))
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Article',
+        '@id': `${url}#article`,
+        headline: cs.seo?.title || cs.title,
+        description: cs.seo?.description || cs.cardSummary || undefined,
+        image: img?.url ? [absoluteUrl(img.url)] : undefined,
+        datePublished: cs.publishedDate || cs.createdAt,
+        dateModified: cs.updatedAt,
+        inLanguage: locale === 'fr-ca' ? 'fr-CA' : 'en',
+        mainEntityOfPage: url,
+        author: { '@id': `${SITE_URL}/#organization` },
+        publisher: { '@id': `${SITE_URL}/#organization` },
+        about: cs.industry || undefined,
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { name: 'Vanture', path: localePath(locale) },
+          { name: t('indexTitle'), path: localePath(locale, '/case-studies') },
+          { name: cs.title, path: localePath(locale, `/case-studies/${cs.slug}`) },
+        ].map((c, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: c.name,
+          item: absoluteUrl(c.path),
+        })),
+      },
+    ],
+  }
+
   const Section = ({ label, children }: { label: string; children: React.ReactNode }) => (
     <section className="border-t border-border/60 py-8">
       <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
@@ -58,6 +102,7 @@ export default async function CaseStudyPage({ params }: Props) {
 
   return (
     <article className="py-16 md:py-20">
+      <JsonLd data={structuredData} />
       <Container className="max-w-3xl">
         <Link
           href="/case-studies"
