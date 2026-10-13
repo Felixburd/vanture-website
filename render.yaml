@@ -9,8 +9,11 @@ services:
     region: virginia
     branch: main
     buildCommand: pnpm install --frozen-lockfile && pnpm build
-    # ensure-media seeds the persistent disk with image files on first boot (idempotent)
-    startCommand: node scripts/ensure-media.mjs && pnpm start
+    # ensure-media seeds the persistent disk with image files on first boot, then
+    # media:regenerate fills in missing/outdated image sizes (both idempotent).
+    # Regeneration runs before the server so sharp has the instance to itself,
+    # and never blocks start.
+    startCommand: node scripts/ensure-media.mjs && (pnpm media:regenerate || true) && pnpm start
     healthCheckPath: /
     autoDeployTrigger: commit
     disk:
