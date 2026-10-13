@@ -1,9 +1,15 @@
 import type { MetadataRoute } from 'next'
+import { SITE_URL } from '@/lib/seo'
 
 export default function robots(): MetadataRoute.Robots {
-  const base = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
   return {
-    rules: { userAgent: '*', allow: '/', disallow: ['/admin', '/api'] },
-    sitemap: `${base}/sitemap.xml`,
+    rules: {
+      userAgent: '*',
+      // Uploaded images are served from /api/media — keep them crawlable for
+      // image search and link previews while the rest of the API stays blocked.
+      allow: ['/', '/api/media/'],
+      disallow: ['/admin', '/api'],
+    },
+    sitemap: `${SITE_URL}/sitemap.xml`,
   }
 }

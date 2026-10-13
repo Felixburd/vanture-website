@@ -1,26 +1,102 @@
 import type { Metadata } from 'next'
 import type { Media } from '@/payload-types'
+import { routing, type Locale } from '@/i18n/routing'
+import { getSiteSettings } from '@/lib/payload'
 
-type Seo = {
+/** Public origin every canonical/hreflang/sitemap URL is built from (no trailing slash). */
+export const SITE_URL = (process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000').replace(
+  /\/+$/,
+  '',
+)
+
+// hreflang codes and OpenGraph locales for each routing locale.
+const hreflang: Record<Locale, string> = { en: 'en', 'fr-ca': 'fr-CA' }
+const ogLocale: Record<Locale, string> = { en: 'en_CA', 'fr-ca': 'fr_CA' }
+
+/** Site-relative path for `path` in `locale` — English is unprefixed (`localePrefix: 'as-needed'`). */
+export function localePath(locale: Locale, path = ''): string {
+  const prefix = locale === routing.defaultLocale ? '' : `/${locale}`
+  return `${prefix}${path}` || '/'
+}
+
+export function absoluteUrl(path: string): string {
+  return path.startsWith('http') ? path : `${SITE_URL}${path}`
+}
+
+/** hreflang map for one route across every locale, plus x-default → the default locale. */
+export function languageAlternates(path = ''): Record<string, string> {
+  const languages: Record<string, string> = {}
+  for (const loc of routing.locales) languages[hreflang[loc]] = localePath(loc, path)
+  languages['x-default'] = localePath(routing.defaultLocale, path)
+  return languages
+}
+
+type Seo =
+  | {
+      title?: string | null
+      description?: string | null
+      image?: (number | null) | Media
+    }
+  | null
+  | undefined
+
+const mediaUrl = (m?: (number | null) | Media) => (m && typeof m === 'object' ? m.url : undefined)
+
+/**
+ * Full page metadata: per-doc SEO overrides → page fallbacks → site defaults,
+ * plus canonical, hreflang alternates and a complete OpenGraph block.
+ *
+ * OpenGraph is built whole here because Next replaces (not deep-merges) the
+ * layout's `openGraph` whenever a page sets one.
+ */
+export async function pageMetadata({
+  locale,
+  path,
+  seo,
+  title: fallbackTitle,
+  description: fallbackDescription,
+  image: fallbackImage,
+  article,
+}: {
+  locale: Locale
+  /** Locale-agnostic route path, e.g. '' for home or '/about'. */
+  path: string
+  seo?: Seo
   title?: string | null
   description?: string | null
   image?: (number | null) | Media
-} | null | undefined
+  article?: { publishedTime?: string | null; modifiedTime?: string | null }
+}): Promise<Metadata> {
+  const settings = await getSiteSettings(locale)
+  const defaults = settings.defaultSeo
 
-export function docMetadata(seo: Seo, fallbackTitle?: string | null): Metadata {
-  const title = seo?.title || fallbackTitle || undefined
-  const description = seo?.description || undefined
-  const img = seo?.image && typeof seo.image === 'object' ? seo.image.url : undefined
-
-  // Omit undefined keys entirely — an explicit `title: undefined` suppresses the
+  // Omit an empty title entirely — an explicit `title: undefined` suppresses the
   // layout's `title.default` instead of falling back to it (e.g. blank home title).
-  const meta: Metadata = {}
+  const title = seo?.title || fallbackTitle || undefined
+  const description = seo?.description || fallbackDescription || defaults?.description || undefined
+  const image = mediaUrl(seo?.image) || mediaUrl(fallbackImage) || mediaUrl(defaults?.image)
+  const url = localePath(locale, path)
+
+  const meta: Metadata = {
+    alternates: { canonical: url, languages: languageAlternates(path) },
+    openGraph: {
+      title: title || defaults?.title || settings.siteName || 'Vanture',
+      description,
+      url,
+      siteName: settings.siteName || 'Vanture',
+      locale: ogLocale[locale],
+      alternateLocale: routing.locales.filter((l) => l !== locale).map((l) => ogLocale[l]),
+      images: image ? [{ url: image }] : [],
+      ...(article
+        ? {
+            type: 'article',
+            publishedTime: article.publishedTime || undefined,
+            modifiedTime: article.modifiedTime || undefined,
+          }
+        : { type: 'website' }),
+    },
+  }
   if (title) meta.title = title
   if (description) meta.description = description
-  // Next overwrites (not deep-merges) `openGraph`, so only set it when this doc has
-  // its own share image; otherwise the layout's default OG image is preserved.
-  if (img) {
-    meta.openGraph = { title, description, images: [{ url: img }] }
-  }
   return meta
 }

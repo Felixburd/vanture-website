@@ -8,13 +8,19 @@ import { Link } from '@/i18n/navigation'
 import { routing, type Locale } from '@/i18n/routing'
 import { getCaseStudies } from '@/lib/payload'
 import { Container } from '@/components/blocks/shared'
+import { pageMetadata } from '@/lib/seo'
 
 type Props = { params: Promise<{ locale: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'caseStudy' })
-  return { title: t('indexTitle'), description: t('indexIntro') }
+  return pageMetadata({
+    locale: locale as Locale,
+    path: '/case-studies',
+    title: t('indexTitle'),
+    description: t('indexIntro'),
+  })
 }
 
 export default async function CaseStudiesPage({ params }: Props) {
@@ -65,9 +71,9 @@ export default async function CaseStudiesPage({ params }: Props) {
                       <span className="font-semibold text-primary">{cs.askingPriceLabel}</span>
                     ) : null}
                   </div>
-                  <h3 className="mt-3 text-lg font-semibold leading-snug tracking-tight">
+                  <h2 className="mt-3 text-lg font-semibold leading-snug tracking-tight">
                     {cs.title}
-                  </h3>
+                  </h2>
                   {cs.cardSummary ? (
                     <p className="mt-2 text-sm text-muted-foreground">{cs.cardSummary}</p>
                   ) : null}
