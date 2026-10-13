@@ -152,6 +152,7 @@ export interface Page {
         | ComparisonBlock
         | CtaBlock
         | RichTextBlock
+        | FaqBlock
       )[]
     | null;
   /**
@@ -471,6 +472,31 @@ export interface RichTextBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FaqBlock".
+ */
+export interface FaqBlock {
+  /**
+   * Background tone for this section.
+   */
+  tone?: ('light' | 'white' | 'dark' | 'graydark') | null;
+  eyebrow?: string | null;
+  heading?: string | null;
+  items?:
+    | {
+        question: string;
+        /**
+         * Plain text; separate paragraphs with a blank line.
+         */
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'faq';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "caseStudies".
  */
 export interface CaseStudy {
@@ -681,6 +707,7 @@ export interface PagesSelect<T extends boolean = true> {
         comparison?: T | ComparisonBlockSelect<T>;
         cta?: T | CtaBlockSelect<T>;
         richText?: T | RichTextBlockSelect<T>;
+        faq?: T | FaqBlockSelect<T>;
       };
   seo?:
     | T
@@ -905,6 +932,24 @@ export interface RichTextBlockSelect<T extends boolean = true> {
   eyebrow?: T;
   heading?: T;
   content?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FaqBlock_select".
+ */
+export interface FaqBlockSelect<T extends boolean = true> {
+  tone?: T;
+  eyebrow?: T;
+  heading?: T;
+  items?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

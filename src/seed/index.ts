@@ -87,7 +87,7 @@ const IMG = {
 
 // Section tone rhythm mirroring the brand site (light → dark → light → graydark …).
 const HOME_TONES = ['light', 'dark', 'light', 'graydark', 'light', 'white', 'dark', 'white']
-const ABOUT_TONES = ['light', 'white', 'dark']
+const ABOUT_TONES = ['light', 'white', 'light', 'dark']
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const withTones = (layout: any[], tones: string[]) =>
   layout.map((b, i) => ({ ...b, tone: tones[i] ?? 'light' }))
@@ -460,6 +460,27 @@ async function seed() {
       ]),
     },
     {
+      blockType: 'faq',
+      heading: 'Frequently asked questions',
+      items: [
+        {
+          question: 'What is DVTA?',
+          answer:
+            'DVTA, the Digital Value & Transferability Assessment, measures how much of a company’s value lives in documented, transferable processes rather than in people and relationships. It covers what traditional due diligence structurally cannot.',
+        },
+        {
+          question: 'How is DVTA different from traditional due diligence?',
+          answer:
+            'Traditional due diligence verifies the financial statements. DVTA examines the operations behind them: how revenue is earned, how costs become commitments, and where execution depends on people instead of systems.',
+        },
+        {
+          question: 'Who is DVTA for?',
+          answer:
+            'Buyers and investors assessing an acquisition, owners preparing a business for sale, and advisors who need an independent read on operational transferability.',
+        },
+      ],
+    },
+    {
       blockType: 'cta',
       heading: "See what you're actually buying.",
       body: "Before you sign, know what's durable: how revenue is earned, how costs become commitments, and where execution depends on people instead of systems.",
@@ -496,6 +517,27 @@ async function seed() {
           txt(" développe l'IA opérationnelle. Interbroker gère la traduction et la restructuration des données en F&A. Diagnostic, remédiation et infrastructure sous un même toit, ce qui donne du mordant à la méthodologie : nous ne faisons pas que trouver l'écart, nous avons les gens pour le combler."),
         ]),
       ]),
+    },
+    {
+      blockType: 'faq',
+      heading: 'Questions fréquentes',
+      items: [
+        {
+          question: 'Qu’est-ce que la DVTA?',
+          answer:
+            'La DVTA, l’évaluation de la valeur et de la transférabilité numériques, mesure la part de la valeur d’une entreprise qui repose sur des processus documentés et transférables plutôt que sur des personnes et des relations. Elle couvre ce que la vérification diligente traditionnelle ne peut structurellement pas mesurer.',
+        },
+        {
+          question: 'En quoi la DVTA diffère-t-elle de la vérification diligente traditionnelle?',
+          answer:
+            'La vérification diligente traditionnelle valide les états financiers. La DVTA examine les opérations qui les sous-tendent : comment les revenus sont générés, comment les coûts deviennent des engagements et où l’exécution dépend des personnes plutôt que des systèmes.',
+        },
+        {
+          question: 'À qui s’adresse la DVTA?',
+          answer:
+            'Aux acheteurs et investisseurs qui évaluent une acquisition, aux propriétaires qui préparent la vente de leur entreprise et aux conseillers qui ont besoin d’une lecture indépendante de la transférabilité opérationnelle.',
+        },
+      ],
     },
     {
       blockType: 'cta',
