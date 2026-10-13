@@ -1,6 +1,6 @@
+import Image from 'next/image'
 import type { HeroBlock } from '@/payload-types'
 import type { Locale } from '@/i18n/routing'
-import { MediaImage } from '@/components/MediaImage'
 import { Buttons, Container } from './shared'
 import { HeroWireframe } from './HeroWireframe'
 
@@ -40,9 +40,10 @@ export async function Hero({
 
           {img?.url ? (
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border lg:aspect-[5/6]">
-              <MediaImage
-                media={img}
-                max="hero"
+              <Image
+                src={img.url}
+                alt={img.alt ?? ''}
+                fill
                 priority
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 48vw"

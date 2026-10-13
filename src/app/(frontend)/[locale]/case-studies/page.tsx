@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import { notFound } from 'next/navigation'
 import { hasLocale } from 'next-intl'
@@ -7,7 +8,6 @@ import { Link } from '@/i18n/navigation'
 import { routing, type Locale } from '@/i18n/routing'
 import { getCaseStudies } from '@/lib/payload'
 import { Container } from '@/components/blocks/shared'
-import { MediaImage } from '@/components/MediaImage'
 import { pageMetadata } from '@/lib/seo'
 
 type Props = { params: Promise<{ locale: string }> }
@@ -55,12 +55,12 @@ export default async function CaseStudiesPage({ params }: Props) {
               >
                 {img?.url ? (
                   <div className="relative aspect-[16/10] overflow-hidden">
-                    <MediaImage
-                      media={img}
-                      max="card"
+                    <Image
+                      src={img.url}
                       alt={img.alt ?? cs.title}
+                      fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      sizes="(max-width: 768px) 100vw, 33vw"
                     />
                   </div>
                 ) : null}
