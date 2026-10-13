@@ -1,0 +1,25 @@
+{
+  "projectId": "131b5ffe-64a7-44b7-a028-c59c074439c4",
+  "shape": "package",
+  "pkg": "vanture-website",
+  "globalName": "VantureDS",
+  "srcDir": "src",
+  "tsconfig": ".design-sync/tsconfig.build.json",
+  "entry": ".design-sync/bundle-entry.tsx",
+  "cssEntry": ".design-sync/.cache/compiled.css",
+  "readmeHeader": ".design-sync/conventions.md",
+  "componentSrcMap": {
+    "Button": "src/components/ui/button.tsx",
+    "Badge": "src/components/ui/badge.tsx",
+    "Card": "src/components/ui/card.tsx",
+    "Input": "src/components/ui/input.tsx",
+    "HeroWireframe": "src/components/blocks/HeroWireframe.tsx",
+    "Logo": ".design-sync/components/brand/Logo.tsx",
+    "Stats": "src/components/blocks/Stats.tsx",
+    "Comparison": "src/components/blocks/Comparison.tsx",
+    "Lenses": "src/components/blocks/Lenses.tsx",
+    "DvtaTabs": "src/components/blocks/DvtaTabs.tsx",
+    "Container": "src/components/blocks/shared.tsx",
+    "GridFrame": "src/components/blocks/shared.tsx"
+  }
+}

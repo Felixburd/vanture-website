@@ -1,0 +1,36 @@
+/*
+  design-sync Tailwind v4 compile entry.
+
+  The site compiles Tailwind at `next build` time, so a standalone design-system
+  bundle has no styling unless we precompile here. This wrapper:
+    - pulls in the real brand tokens + utilities (globals.css),
+    - loads the three brand families from Google Fonts (the site loads the same
+      families via next/font; here they arrive over @import → [FONT_REMOTE]),
+    - binds the next/font CSS variables (--font-inter, etc.) to those families so
+      --font-sans / --font-display / --font-mono resolve instead of falling back,
+    - forces Tailwind to scan the component + preview sources for used utilities.
+*/
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,600&display=swap');
+@import '../src/app/(frontend)/globals.css';
+
+@source '../src/components';
+@source './previews';
+
+/*
+  Safelist the full brand token-backed utility set. Tailwind only emits utilities
+  it sees used, but a precompiled DS stylesheet must carry every token utility the
+  design agent might compose with (it can't run Tailwind itself). These mirror the
+  @theme color tokens. (tone-* classes are literal rules in globals.css, always
+  emitted; font-* / tabular-nums / uppercase / tracking-* likewise safelisted.)
+*/
+@source inline("{bg,text,border}-{background,foreground,card,popover,muted,accent,secondary,primary,destructive,border,input,ring}");
+@source inline("{bg,text}-{card,popover,muted,accent,secondary,primary}-foreground");
+@source inline("{bg,text,border}-status-{green,amber,critical}");
+@source inline("{bg,text,border}-status-{green,amber,critical}/{10,12,15,20,25,30}");
+@source inline("font-{sans,display,mono} tabular-nums uppercase tracking-{wide,wider,widest}");
+
+:root {
+  --font-inter: 'Inter';
+  --font-roboto-flex: 'Roboto Flex';
+  --font-plex-mono: 'IBM Plex Mono';
+}
