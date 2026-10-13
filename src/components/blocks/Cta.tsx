@@ -1,6 +1,6 @@
+import Image from 'next/image'
 import type { CtaBlock } from '@/payload-types'
 import type { Locale } from '@/i18n/routing'
-import { MediaImage } from '@/components/MediaImage'
 import { Buttons, Container, Paragraphs } from './shared'
 
 export async function Cta({ block, locale }: { block: CtaBlock; locale: Locale }) {
@@ -25,9 +25,10 @@ export async function Cta({ block, locale }: { block: CtaBlock; locale: Locale }
               </div>
             </div>
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border lg:aspect-[4/4.5]">
-              <MediaImage
-                media={img}
-                max="hero"
+              <Image
+                src={img.url}
+                alt={img.alt ?? ''}
+                fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 48vw"
               />
