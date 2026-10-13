@@ -28,9 +28,10 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Run on every path EXCEPT Payload's admin/API/GraphQL routes, Next internals,
-  // and anything with a file extension. This keeps next-intl off Payload.
+  // Run on every path EXCEPT Payload's admin/API/GraphQL routes, generated share
+  // images (/og), Next internals, and anything with a file extension. This keeps
+  // next-intl off Payload.
   matcher: [
-    '/((?!api|admin|graphql|graphql-playground|_next|_vercel|.*\\..*).*)',
+    '/((?!api|admin|graphql|graphql-playground|og/|_next|_vercel|.*\\..*).*)',
   ],
 }
