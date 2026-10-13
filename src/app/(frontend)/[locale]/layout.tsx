@@ -6,7 +6,9 @@ import { Inter, Roboto_Flex, IBM_Plex_Mono } from 'next/font/google'
 import { routing, type Locale } from '@/i18n/routing'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
-import { getSiteSettings } from '@/lib/payload'
+import { JsonLd } from '@/components/JsonLd'
+import { getFooter, getSiteSettings } from '@/lib/payload'
+import { SITE_URL, absoluteUrl, localePath } from '@/lib/seo'
 import '../globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
@@ -39,7 +41,7 @@ export async function generateMetadata({
     typeof settings.defaultSeo?.image === 'object' ? settings.defaultSeo?.image?.url : undefined
 
   return {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'),
+    metadataBase: new URL(SITE_URL),
     title: {
       default: settings.defaultSeo?.title || 'Vanture',
       template: '%s · Vanture',
@@ -47,7 +49,7 @@ export async function generateMetadata({
     description: settings.defaultSeo?.description || undefined,
     openGraph: {
       siteName: settings.siteName || 'Vanture',
-      locale,
+      locale: locale === 'fr-ca' ? 'fr_CA' : 'en_CA',
       type: 'website',
       images: ogImage ? [{ url: ogImage }] : [],
     },
@@ -65,6 +67,32 @@ export default async function LocaleLayout({
   if (!hasLocale(routing.locales, locale)) notFound()
   setRequestLocale(locale)
   const messages = await getMessages()
+  const [settings, footer] = await Promise.all([getSiteSettings(locale), getFooter(locale)])
+  const siteName = settings.siteName || 'Vanture'
+
+  // Sitewide entity graph: who publishes this site, and the site itself.
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': `${SITE_URL}/#organization`,
+        name: siteName,
+        url: absoluteUrl('/'),
+        logo: absoluteUrl('/vanture-mark.svg'),
+        description: settings.defaultSeo?.description || undefined,
+        sameAs: footer.socialLinks?.map((s) => s.url).filter(Boolean),
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${SITE_URL}/#website`,
+        name: siteName,
+        url: absoluteUrl(localePath(locale)),
+        inLanguage: locale === 'fr-ca' ? 'fr-CA' : 'en',
+        publisher: { '@id': `${SITE_URL}/#organization` },
+      },
+    ],
+  }
 
   return (
     <html
@@ -73,6 +101,7 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen font-sans antialiased">
+        <JsonLd data={structuredData} />
         <NextIntlClientProvider messages={messages}>
           <Header locale={locale} />
           <main>{children}</main>

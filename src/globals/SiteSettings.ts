@@ -1,5 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
+import { seoFields } from '../fields/seo'
+
 export const SiteSettings: GlobalConfig = {
   slug: 'siteSettings',
   label: 'Site Settings',
@@ -18,11 +20,7 @@ export const SiteSettings: GlobalConfig = {
     {
       name: 'defaultSeo',
       type: 'group',
-      fields: [
-        { name: 'title', type: 'text', localized: true },
-        { name: 'description', type: 'textarea', localized: true },
-        { name: 'image', type: 'upload', relationTo: 'media' },
-      ],
+      fields: seoFields,
     },
   ],
 }
