@@ -8,7 +8,7 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { JsonLd } from '@/components/JsonLd'
 import { getFooter, getSiteSettings } from '@/lib/payload'
-import { SITE_URL, absoluteUrl, localePath } from '@/lib/seo'
+import { SITE_URL, absoluteUrl, localePath, shareImages } from '@/lib/seo'
 import '../globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
@@ -37,8 +37,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   const settings = await getSiteSettings(locale as Locale)
-  const ogImage =
-    typeof settings.defaultSeo?.image === 'object' ? settings.defaultSeo?.image?.url : undefined
+  // Pages without their own openGraph fall back to the locale's generated home image.
+  const images = shareImages(locale as Locale, '')
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -51,8 +51,9 @@ export async function generateMetadata({
       siteName: settings.siteName || 'Vanture',
       locale: locale === 'fr-ca' ? 'fr_CA' : 'en_CA',
       type: 'website',
-      images: ogImage ? [{ url: ogImage }] : [],
+      images,
     },
+    twitter: { card: 'summary_large_image', images },
   }
 }
 

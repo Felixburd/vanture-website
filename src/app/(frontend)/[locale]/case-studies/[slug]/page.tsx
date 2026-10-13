@@ -36,7 +36,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     seo: cs.seo,
     title: cs.title,
     description: cs.cardSummary,
-    image: cs.heroImage,
     article: { publishedTime: cs.publishedDate, modifiedTime: cs.updatedAt },
   })
 }
