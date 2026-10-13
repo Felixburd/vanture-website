@@ -1,7 +1,7 @@
-import Image from 'next/image'
 import type { AudienceBlock } from '@/payload-types'
 import type { Locale } from '@/i18n/routing'
 import { CMSLink } from '@/components/CMSLink'
+import { MediaImage } from '@/components/MediaImage'
 import { Container } from './shared'
 import { cn } from '@/lib/utils'
 
@@ -11,6 +11,12 @@ const spans = [
   'lg:col-span-2',
   'lg:col-span-1',
   'lg:col-span-1',
+]
+// Matching srcset hints: two wide tiles, then single-column tiles (max-w-6xl grid).
+const tileSizes = [
+  '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 576px',
+  '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 576px',
+  '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 288px',
 ]
 
 export async function Audience({
@@ -39,12 +45,11 @@ export async function Audience({
                 >
                   {img?.url ? (
                     <>
-                      <Image
-                        src={img.url}
-                        alt={img.alt ?? ''}
-                        fill
+                      <MediaImage
+                        media={img}
+                        max="hero"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        sizes={tileSizes[i] ?? tileSizes[2]}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/10" />
                     </>

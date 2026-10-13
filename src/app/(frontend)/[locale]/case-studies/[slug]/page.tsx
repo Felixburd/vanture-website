@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import { ArrowLeft } from 'lucide-react'
 import { notFound } from 'next/navigation'
 import { hasLocale } from 'next-intl'
@@ -10,6 +9,7 @@ import { getCaseStudies, getCaseStudy } from '@/lib/payload'
 import { Container, Paragraphs } from '@/components/blocks/shared'
 import { Badge } from '@/components/ui/badge'
 import { CMSLink } from '@/components/CMSLink'
+import { MediaImage } from '@/components/MediaImage'
 import { JsonLd } from '@/components/JsonLd'
 import { SITE_URL, absoluteUrl, localePath, pageMetadata } from '@/lib/seo'
 
@@ -115,7 +115,7 @@ export default async function CaseStudyPage({ params }: Props) {
 
         {img?.url ? (
           <div className="relative mt-6 aspect-[16/9] overflow-hidden rounded-2xl border border-border">
-            <Image src={img.url} alt={img.alt ?? cs.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 768px" priority />
+            <MediaImage media={img} max="hero" alt={img.alt ?? cs.title} className="object-cover" sizes="(max-width: 768px) 100vw, 768px" priority />
           </div>
         ) : null}
 

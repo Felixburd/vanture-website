@@ -13,7 +13,8 @@
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
-    "seed": "cross-env NODE_OPTIONS=--no-deprecation node --env-file-if-exists=.env --import tsx src/seed/index.ts"
+    "seed": "cross-env NODE_OPTIONS=--no-deprecation node --env-file-if-exists=.env --import tsx src/seed/index.ts",
+    "media:regenerate": "cross-env NODE_ENV=production MALLOC_ARENA_MAX=2 NODE_OPTIONS=--no-deprecation node --max-old-space-size=192 --env-file-if-exists=.env --import tsx scripts/regenerate-media.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "3.85.0",
